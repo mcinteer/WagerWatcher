@@ -29,22 +29,24 @@ namespace WagerWatcher
             _results = new XMLHelper(Constants.resultsDownload + date);
             _pools = new XMLHelper(Constants.poolsDownload + date);
             _willPay = new XMLHelper(Constants.willPayDownload + date);
-            _context = new LightSpeedContext<LightSpeedStoreModelUnitOfWork>("default");
-            _context.IdentityMethod = IdentityMethod.Guid;
+            _context = new LightSpeedContext<LightSpeedStoreModelUnitOfWork>("default")
+                {
+                    IdentityMethod = IdentityMethod.Guid
+                };
         }
 
         public bool UpdateRaceDay()
         {
             var success = true;
 
-            XPathNodeIterator scheduleReader = _schedule.getNodeSet("/schedule/meetings/meeting");
+            XPathNodeIterator scheduleReader = _schedule.GetNodeSet("/schedule/meetings/meeting");
 
             uow = _context.CreateUnitOfWork();
 
             while (scheduleReader.MoveNext())
             {
                 var meetingInfo = scheduleReader.Current.SelectChildren(XPathNodeType.Element);
-                Meeting currentMeeting = getMeeting(meetingInfo);
+                Meeting currentMeeting = GetMeeting(meetingInfo);
                 uow.Add(currentMeeting);
             }
             uow.SaveChanges();
@@ -52,122 +54,121 @@ namespace WagerWatcher
             return success;
         }
 
-        public Meeting getMeeting(XPathNodeIterator meetingInfo)
+        public Meeting GetMeeting(XPathNodeIterator meetingInfo)
         {
             var currentMeeting = new Meeting();
             while (meetingInfo.MoveNext())
             {
-                if (meetingInfo.Current.LocalName == "date")
+                switch (meetingInfo.Current.LocalName)
                 {
-                    currentMeeting.MDate = Convert.ToDateTime(meetingInfo.Current.Value);
-                }
-                else if (meetingInfo.Current.LocalName == "number")
-                {
-                    currentMeeting.JetBetCode = int.Parse(meetingInfo.Current.Value);
-                }
-                else if (meetingInfo.Current.LocalName == "track_dir")
-                {
-                    currentMeeting.TrackDirection = meetingInfo.Current.Value;
-                }
-                else if (meetingInfo.Current.LocalName == "venue")
-                {
-                    var currentCourse = uow.RaceCourses.SingleOrDefault(c => c.CourseName == meetingInfo.Current.Value) ?? new RaceCourse();
-                    if (currentCourse.CourseName == null)
-                    {                        
-                        currentCourse.CourseName = meetingInfo.Current.Value;
-                        uow.Add(currentCourse);
-                    }
-                    currentMeeting.CourseId = currentCourse.Id;
-                }
-                else if (meetingInfo.Current.LocalName == "races")
-                {
-                    var races = meetingInfo.Current.SelectChildren(XPathNodeType.Element);
-                    while (races.MoveNext())
-                    {
-                        var raceInfo = races.Current.SelectChildren(XPathNodeType.Element);
-                        Race currentRace = getRace(raceInfo);
-                        currentRace.MeetingId = currentMeeting.Id;
-                        uow.Add(currentRace);
-                    }
+                    case "date":
+                        currentMeeting.MDate = Convert.ToDateTime(meetingInfo.Current.Value);
+                        break;
+                    case "number":
+                        currentMeeting.JetBetCode = int.Parse(meetingInfo.Current.Value);
+                        break;
+                    case "track_dir":
+                        currentMeeting.TrackDirection = meetingInfo.Current.Value;
+                        break;
+                    case "venue":
+                        {
+                            var currentCourse = uow.RaceCourses.SingleOrDefault(c => c.CourseName == meetingInfo.Current.Value) ?? new RaceCourse();
+                            if (currentCourse.CourseName == null)
+                            {                        
+                                currentCourse.CourseName = meetingInfo.Current.Value;
+                                uow.Add(currentCourse);
+                            }
+                            currentMeeting.CourseId = currentCourse.Id;
+                        }
+                        break;
+                    case "races":
+                        {
+                            var races = meetingInfo.Current.SelectChildren(XPathNodeType.Element);
+                            while (races.MoveNext())
+                            {
+                                var raceInfo = races.Current.SelectChildren(XPathNodeType.Element);
+                                Race currentRace = GetRace(raceInfo);
+                                currentRace.MeetingId = currentMeeting.Id;
+                                uow.Add(currentRace);
+                            }
+                        }
+                        break;
                 }
             }
             return currentMeeting;
         }
 
-        public Race getRace(XPathNodeIterator raceInfo)
+        public Race GetRace(XPathNodeIterator raceInfo)
         {
             var currentRace = new Race();
             while (raceInfo.MoveNext())
             {
-                if (raceInfo.Current.LocalName == "length")
+                switch (raceInfo.Current.LocalName)
                 {
-                    currentRace.Distance = int.Parse(raceInfo.Current.Value);
-                }
-                else if (raceInfo.Current.LocalName == "name")
-                {
-                    currentRace.RaceName = raceInfo.Current.Value;
-                }
-                else if (raceInfo.Current.LocalName == "number")
-                {
-                    currentRace.RaceNum = int.Parse(raceInfo.Current.Value);
-                }
-                else if (raceInfo.Current.LocalName == "stake")
-                {
-                    currentRace.Stake = raceInfo.Current.Value;
-                }
-                else if (raceInfo.Current.LocalName == "track")
-                {
-                    currentRace.TrackCondition = raceInfo.Current.Value;
-                }
-                else if (raceInfo.Current.LocalName == "weather")
-                {
-                    currentRace.Weather = raceInfo.Current.Value;
-                }
-                else if (raceInfo.Current.LocalName == "options")
-                { }
-                else if (raceInfo.Current.LocalName == "entries")
-                {
-                    var runners = raceInfo.Current.SelectChildren(XPathNodeType.Element);
-                    while (runners.MoveNext())
-                    {
-                        var runnerInfo = runners.Current.SelectChildren(XPathNodeType.Element);
-                        HorseInRace currentRaceHorse = getHorseInRace(runnerInfo);
-                        currentRaceHorse.RaceId = currentRace.Id;
-                        uow.Add(currentRaceHorse);
-
-                        var currentHorse = uow.Horses.SingleOrDefault(h => h.HorseName == currentRaceHorse.Name) ?? new Horse();
-                        if (currentHorse.HorseName == null)
+                    case "length":
+                        currentRace.Distance = int.Parse(raceInfo.Current.Value);
+                        break;
+                    case "name":
+                        currentRace.RaceName = raceInfo.Current.Value;
+                        break;
+                    case "number":
+                        currentRace.RaceNum = int.Parse(raceInfo.Current.Value);
+                        break;
+                    case "stake":
+                        currentRace.Stake = raceInfo.Current.Value;
+                        break;
+                    case "track":
+                        currentRace.TrackCondition = raceInfo.Current.Value;
+                        break;
+                    case "weather":
+                        currentRace.Weather = raceInfo.Current.Value;
+                        break;
+                    case "options":
+                        break;
+                    case "entries":
                         {
-                            currentHorse.HorseName = currentRaceHorse.Name;
+                            var runners = raceInfo.Current.SelectChildren(XPathNodeType.Element);
+                            while (runners.MoveNext())
+                            {
+                                var runnerInfo = runners.Current.SelectChildren(XPathNodeType.Element);
+                                HorseInRace currentRaceHorse = GetHorseInRace(runnerInfo);
+                                currentRaceHorse.RaceId = currentRace.Id;
+                                uow.Add(currentRaceHorse);
+
+                                var currentHorse = uow.Horses.SingleOrDefault(h => h.HorseName == currentRaceHorse.Name) ?? new Horse();
+                                if (currentHorse.HorseName == null)
+                                {
+                                    currentHorse.HorseName = currentRaceHorse.Name;
+                                }
+                                uow.Add(currentHorse);
+                            }
                         }
-                        uow.Add(currentHorse);
-                    }
+                        break;
                 }
 
             }
             return currentRace;
         }
 
-        public HorseInRace getHorseInRace(XPathNodeIterator runnerInfo)
+        public HorseInRace GetHorseInRace(XPathNodeIterator runnerInfo)
         {
             var currentRaceHorse = new HorseInRace();
             while (runnerInfo.MoveNext())
             {
-                if (runnerInfo.Current.LocalName == "barrier")
+                switch (runnerInfo.Current.LocalName)
                 {
-                    currentRaceHorse.Barrier = runnerInfo.Current.Value;
-                }
-                else if (runnerInfo.Current.LocalName == "jockey")
-                {
-                    currentRaceHorse.Jockey = runnerInfo.Current.Value;
-                }
-                else if (runnerInfo.Current.LocalName == "name")
-                {
-                    currentRaceHorse.Name = runnerInfo.Current.Value;
-                }
-                else if (runnerInfo.Current.LocalName == "jockey_weight")
-                {
-                    currentRaceHorse.JockeyWeight = decimal.Parse(runnerInfo.Current.Value);
+                    case "barrier":
+                        currentRaceHorse.Barrier = runnerInfo.Current.Value;
+                        break;
+                    case "jockey":
+                        currentRaceHorse.Jockey = runnerInfo.Current.Value;
+                        break;
+                    case "name":
+                        currentRaceHorse.Name = runnerInfo.Current.Value;
+                        break;
+                    case "jockey_weight":
+                        currentRaceHorse.JockeyWeight = decimal.Parse(runnerInfo.Current.Value);
+                        break;
                 }                
             }
             return currentRaceHorse;

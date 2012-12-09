@@ -9,8 +9,8 @@ namespace WagerWatcher
 {
     class XMLHelper
     {
-        XPathDocument _xmlDoc;
-        XPathNavigator _docNav;
+        readonly XPathDocument _xmlDoc;
+        readonly XPathNavigator _docNav;
 
         public XMLHelper(string uri)
         {
@@ -18,7 +18,7 @@ namespace WagerWatcher
             _docNav = _xmlDoc.CreateNavigator();
         }
 
-        public XPathNodeIterator getNodeSet(string xPath)
+        public XPathNodeIterator GetNodeSet(string xPath)
         {
             return _docNav.Select(xPath);
         }

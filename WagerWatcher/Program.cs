@@ -14,8 +14,10 @@ namespace WagerWatcher
         private static LightSpeedContext<LightSpeedStoreModelUnitOfWork> _context;
         static void Main(string[] args)
         {
-            _context = new LightSpeedContext<LightSpeedStoreModelUnitOfWork>("default");
-            _context.IdentityMethod = IdentityMethod.Guid;
+            _context = new LightSpeedContext<LightSpeedStoreModelUnitOfWork>("default")
+                {
+                    IdentityMethod = IdentityMethod.Guid
+                };
             GetSchedule("2012-12-09");
         } 
 
@@ -25,7 +27,7 @@ namespace WagerWatcher
             var uow = _context.CreateUnitOfWork();
             var test = new Updater(date);
 
-            test.UpdateRaceDay(uow).SaveChanges();
+            test.UpdateRaceDay();
             
 
             return success;
