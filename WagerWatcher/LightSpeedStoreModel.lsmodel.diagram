@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<minimalLanguageDiagram dslVersion="1.1.0.0" absoluteBounds="0, 0, 11, 17.75" name="LightSpeedStoreModel">
+  <modelMoniker name="/LightSpeedStoreModel" />
+  <nestedChildShapes>
+    <entityShape Id="8bd9e3b4-8098-4660-9276-a736e3e10a2b" absoluteBounds="3.75, 5.125, 1.5, 0.50999999999999979">
+      <entityMoniker name="/LightSpeedStoreModel/Bet" />
+      <nestedChildShapes>
+        <elementListCompartment Id="da753b76-d51b-4d84-b5a3-852a891a4754" absoluteBounds="3.765, 5.535, 1.4700000000000002, 0" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="0b76b4e0-5223-4d6a-803b-82aebd8fb63d" absoluteBounds="4.375, 16.375, 1.5, 1.086904296874998">
+      <entityMoniker name="/LightSpeedStoreModel/RaceCourse" />
+      <nestedChildShapes>
+        <elementListCompartment Id="256f293f-7233-4f18-8e65-18d868d466c6" absoluteBounds="4.3900000000000006, 16.785, 1.4700000000000002, 0.576904296875" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="23ffd55d-cd22-4170-9083-0f60c6babc5a" absoluteBounds="3.75, 3.25, 1.5, 0.70230143229166586">
+      <entityMoniker name="/LightSpeedStoreModel/BetType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="29fce14e-6110-4ef9-b200-0c55a313d5b9" absoluteBounds="3.7650000000000006, 3.66, 1.4700000000000002, 0.19230143229166663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="222177d8-fa71-4ced-8cc1-a31e913408e5" absoluteBounds="6.25, 2.75, 1.5, 0.70230143229166586">
+      <entityMoniker name="/LightSpeedStoreModel/Class" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bf9d5abb-5e5b-4484-8989-a9ba0f59689b" absoluteBounds="6.2650000000000006, 3.16, 1.4700000000000002, 0.19230143229166663" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="ea5ccb1e-c96f-4e6d-82cb-3226345a6dfd" absoluteBounds="6.5, 5.375, 1.5, 0.89460286458333371">
+      <entityMoniker name="/LightSpeedStoreModel/Horse" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c1264343-2f7e-406c-bce2-00df7d59a2e8" absoluteBounds="6.5150000000000006, 5.785, 1.4700000000000002, 0.38460286458333337" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="4303f3e8-2826-4d36-986d-d31c57e3e4d4" absoluteBounds="0.75, 0.875, 1.5, 1.4715071614583335">
+      <entityMoniker name="/LightSpeedStoreModel/HorseInRace" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6ae5827a-ec7e-4359-95ed-4235e351cb73" absoluteBounds="0.76500000000000057, 1.2850000000000001, 1.4700000000000002, 0.96150716145833315" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="54caaefa-5b92-4aa0-9c11-2e3067417fec" absoluteBounds="4.375, 12.5, 1.5, 1.0869042968750016">
+      <entityMoniker name="/LightSpeedStoreModel/Meeting" />
+      <nestedChildShapes>
+        <elementListCompartment Id="831e1133-ed55-45a0-b1fe-554f37cf9089" absoluteBounds="4.3900000000000006, 12.91, 1.4700000000000002, 0.576904296875" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <entityShape Id="962aa0f6-7f65-4cc4-9b11-54f1f2b246a7" absoluteBounds="3.75, 0.75, 1.5, 1.663808593749998">
+      <entityMoniker name="/LightSpeedStoreModel/Race" />
+      <nestedChildShapes>
+        <elementListCompartment Id="363aba97-d049-4ebe-9dec-d072af45d139" absoluteBounds="3.7650000000000006, 1.1600000000000001, 1.4700000000000002, 1.15380859375" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
+    <throughAssociationConnector edgePoints="[(4.5 : 3.25); (4.5 : 2.41380859375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <throughAssociationMoniker Id="44f6afbb-0bce-44d1-ac7f-96dcf3fa3462" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="23ffd55d-cd22-4170-9083-0f60c6babc5a" />
+        <entityShapeMoniker Id="962aa0f6-7f65-4cc4-9b11-54f1f2b246a7" />
+      </nodes>
+    </throughAssociationConnector>
+    <oneToManyAssociationConnector edgePoints="[(5.125 : 16.375); (5.125 : 13.586904296875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <oneToManyAssociationMoniker Id="b4ce1a52-2271-4d45-a773-4f586c1384b4" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="0b76b4e0-5223-4d6a-803b-82aebd8fb63d" />
+        <entityShapeMoniker Id="54caaefa-5b92-4aa0-9c11-2e3067417fec" />
+      </nodes>
+    </oneToManyAssociationConnector>
+    <oneToManyAssociationConnector edgePoints="[(4.5 : 3.95230143229167); (4.5 : 5.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <oneToManyAssociationMoniker Id="bcd24a75-016b-49d8-bfab-734619d929bb" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="23ffd55d-cd22-4170-9083-0f60c6babc5a" />
+        <entityShapeMoniker Id="8bd9e3b4-8098-4660-9276-a736e3e10a2b" />
+      </nodes>
+    </oneToManyAssociationConnector>
+    <oneToManyAssociationConnector edgePoints="[(6.5 : 5.98355143229167); (5.64583383333333 : 5.98355143229167 : JumpStart); (5.47916716666667 : 5.98355143229167 : JumpEnd); (1.5 : 5.98355143229167); (1.5 : 2.34650716145833)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <oneToManyAssociationMoniker Id="2b310484-1a16-4282-897f-1daa7b05220e" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="ea5ccb1e-c96f-4e6d-82cb-3226345a6dfd" />
+        <entityShapeMoniker Id="4303f3e8-2826-4d36-986d-d31c57e3e4d4" />
+      </nodes>
+    </oneToManyAssociationConnector>
+    <oneToManyAssociationConnector edgePoints="[(5.5625005 : 12.5); (5.5625005 : 1.581904296875); (5.25 : 1.581904296875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <oneToManyAssociationMoniker Id="9a7e699e-b16d-4631-bc2e-2fae691a2cde" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="54caaefa-5b92-4aa0-9c11-2e3067417fec" />
+        <entityShapeMoniker Id="962aa0f6-7f65-4cc4-9b11-54f1f2b246a7" />
+      </nodes>
+    </oneToManyAssociationConnector>
+    <oneToManyAssociationConnector edgePoints="[(3.75 : 1.581904296875); (3.375 : 1.581904296875); (3.375 : 5.38); (3.75 : 5.38)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <oneToManyAssociationMoniker Id="37b94637-894f-400d-ac4c-7801419da19e" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="962aa0f6-7f65-4cc4-9b11-54f1f2b246a7" />
+        <entityShapeMoniker Id="8bd9e3b4-8098-4660-9276-a736e3e10a2b" />
+      </nodes>
+    </oneToManyAssociationConnector>
+    <oneToManyAssociationConnector edgePoints="[(3.75 : 2.02670572916667); (3.45833333333333 : 2.02670572916667 : JumpStart); (3.29166666666667 : 2.02670572916667 : JumpEnd); (2.25 : 2.02670572916667)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <oneToManyAssociationMoniker Id="f4249782-cb4d-4e3c-8e40-ee5cb53b57d1" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="962aa0f6-7f65-4cc4-9b11-54f1f2b246a7" />
+        <entityShapeMoniker Id="4303f3e8-2826-4d36-986d-d31c57e3e4d4" />
+      </nodes>
+    </oneToManyAssociationConnector>
+    <oneToManyAssociationConnector edgePoints="[(7 : 2.75); (7 : 2.0291089453125); (5.64583383333333 : 2.0291089453125 : JumpStart); (5.47916716666667 : 2.0291089453125 : JumpEnd); (5.25 : 2.0291089453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <oneToManyAssociationMoniker Id="d5565ea3-fe8a-490f-8a4d-0ad9735ddcd2" />
+      <relativeChildShapes />
+      <nodes>
+        <entityShapeMoniker Id="222177d8-fa71-4ced-8cc1-a31e913408e5" />
+        <entityShapeMoniker Id="962aa0f6-7f65-4cc4-9b11-54f1f2b246a7" />
+      </nodes>
+    </oneToManyAssociationConnector>
+  </nestedChildShapes>
+</minimalLanguageDiagram>

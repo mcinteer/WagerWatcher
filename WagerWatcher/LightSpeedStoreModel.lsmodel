@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<model xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.1.0.0" name="LightSpeedStoreModel" targetNamespace="WagerWatcher" databaseProvider="SqlServer2005" connectionString="Data Source=184.73.139.191;Initial Catalog=WagerWatcher;Persist Security Info=True;User ID=mcinteerr;Password=Rooster12;Pooling=False" pluralizedInDatabase="false" mediumTrustCompatibility="false" xmlns="http://namespaces.mindscape.co.nz/lightspeed">
+  <entities>
+    <entity name="Bet" identityType="Guid" cacheExpiry="0" identityColumnName="BetID" />
+    <entity name="RaceCourse" identityType="Guid" cacheExpiry="0" identityColumnName="CourseID">
+      <entityProperties>
+        <entityProperty name="CourseAddress" isNullable="true" privateSetter="false">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="CourseName" privateSetter="false">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="CoursePhone" dataType="Int32" isNullable="true" privateSetter="false" />
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="b4ce1a52-2271-4d45-a773-4f586c1384b4" collectionName="Meetings" backreferenceName="Course" isNullable="true">
+          <entityMoniker name="/LightSpeedStoreModel/Meeting" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="BetType" identityType="Guid" cacheExpiry="0" identityColumnName="BetTypeID">
+      <entityProperties>
+        <entityProperty name="BetTypeDesc" isNullable="true" privateSetter="false">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="bcd24a75-016b-49d8-bfab-734619d929bb" collectionName="Bets" backreferenceName="BetType" isNullable="true">
+          <entityMoniker name="/LightSpeedStoreModel/Bet" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+      <throughAssociationTargets>
+        <throughAssociation Id="44f6afbb-0bce-44d1-ac7f-96dcf3fa3462" sourceCollectionName="BetTypes" targetCollectionName="Races">
+          <entityMoniker name="/LightSpeedStoreModel/Race" />
+          <throughEntity>
+            <entityMoniker name="/LightSpeedStoreModel/Bet" />
+          </throughEntity>
+        </throughAssociation>
+      </throughAssociationTargets>
+    </entity>
+    <entity name="Class" identityType="Guid" cacheExpiry="0" identityColumnName="ClassID">
+      <entityProperties>
+        <entityProperty name="ClassDesc" privateSetter="false">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="d5565ea3-fe8a-490f-8a4d-0ad9735ddcd2" collectionName="Races" backreferenceName="Class" isNullable="true">
+          <entityMoniker name="/LightSpeedStoreModel/Race" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Horse" identityType="Guid" cacheExpiry="0" identityColumnName="HorseID">
+      <entityProperties>
+        <entityProperty name="HorseName" privateSetter="false">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="StakesWon" dataType="Decimal" isNullable="true" privateSetter="false" />
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="2b310484-1a16-4282-897f-1daa7b05220e" collectionName="HorseInRaces" backreferenceName="Horse" isNullable="true">
+          <entityMoniker name="/LightSpeedStoreModel/HorseInRace" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="HorseInRace" identityType="Guid" cacheExpiry="0" identityColumnName="EntryID">
+      <entityProperties>
+        <entityProperty name="Scratched" dataType="Int32" isNullable="true" privateSetter="false" />
+        <entityProperty name="Jockey" isNullable="true" privateSetter="false">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Barrier" isNullable="true" privateSetter="false">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="5" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="JockeyWeight" dataType="Decimal" isNullable="true" privateSetter="false" />
+        <entityProperty name="Name" isNullable="true" privateSetter="false">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+    </entity>
+    <entity name="Meeting" identityType="Guid" cacheExpiry="0" identityColumnName="MeetingID">
+      <entityProperties>
+        <entityProperty name="MDate" dataType="DateTime" privateSetter="false" />
+        <entityProperty name="JetBetCode" dataType="Int32" privateSetter="false" />
+        <entityProperty name="TrackDirection" isNullable="true" privateSetter="false">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="9a7e699e-b16d-4631-bc2e-2fae691a2cde" collectionName="Races" backreferenceName="Meeting" isNullable="true">
+          <entityMoniker name="/LightSpeedStoreModel/Race" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Race" identityType="Guid" cacheExpiry="0" identityColumnName="RaceID">
+      <entityProperties>
+        <entityProperty name="RaceName" privateSetter="false">
+          <validations>
+            <presenceValidation />
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="RaceNum" dataType="Int32" privateSetter="false" />
+        <entityProperty name="Distance" dataType="Int32" isNullable="true" privateSetter="false" />
+        <entityProperty name="Stake" isNullable="true" privateSetter="false">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="TrackCondition" isNullable="true" privateSetter="false">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Weather" isNullable="true" privateSetter="false">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="37b94637-894f-400d-ac4c-7801419da19e" collectionName="Bets" backreferenceName="Race" isNullable="true">
+          <entityMoniker name="/LightSpeedStoreModel/Bet" />
+        </oneToManyAssociation>
+        <oneToManyAssociation Id="f4249782-cb4d-4e3c-8e40-ee5cb53b57d1" collectionName="HorseInRaces" backreferenceName="Race" isNullable="true">
+          <entityMoniker name="/LightSpeedStoreModel/HorseInRace" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+  </entities>
+</model>
