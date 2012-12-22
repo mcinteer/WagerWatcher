@@ -55,20 +55,38 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Constants.resx</DependentUpon>
     </Compile>
+    <Compile Include="Controller\ClassController.cs" />
+    <Compile Include="Controller\EntryController.cs" />
+    <Compile Include="Controller\HorseController.cs" />
+    <Compile Include="Controller\JockeyController.cs" />
+    <Compile Include="Controller\MeetingController.cs" />
+    <Compile Include="Controller\MeetingsRootController.cs" />
+    <Compile Include="Controller\OptionController.cs" />
     <Compile Include="Controller\RaceController.cs" />
+    <Compile Include="Controller\RaceCourseController.cs" />
+    <Compile Include="Controller\ScheduleController.cs" />
     <Compile Include="Controller\XMLHelper.cs" />
     <Compile Include="LightSpeedStoreModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LightSpeedStoreModel.lsmodel</DependentUpon>
     </Compile>
-    <Compile Include="Model\Race.cs" />
-    <Compile Include="Model\Updater.cs" />
+    <Compile Include="Model\EntriesRootFromXML.cs" />
+    <Compile Include="Model\EntryFromXML.cs" />
+    <Compile Include="Model\MeetingFromXML.cs" />
+    <Compile Include="Model\OptionFromXML.cs" />
+    <Compile Include="Model\OptionsRootFromXML.cs" />
+    <Compile Include="Model\RaceFromXML.cs" />
+    <Compile Include="Model\RacesRootFromXML.cs" />
+    <Compile Include="Model\MeetingsRootFromXML.cs" />
+    <Compile Include="Model\ScheduleFromXML.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="LightSpeedStoreModel.lsmodel">
       <Generator>LightSpeedModelGenerator</Generator>
       <LastGenOutput>LightSpeedStoreModel.cs</LastGenOutput>

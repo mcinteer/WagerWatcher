@@ -117,14 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="horseInRaceRoot" xml:space="preserve">
+    <value>entry</value>
+  </data>
+  <data name="meetingRoot" xml:space="preserve">
+    <value>meeting</value>
+  </data>
   <data name="oddsDownload" xml:space="preserve">
     <value>http://xml.tab.co.nz/odds/</value>
+  </data>
+  <data name="optionRoot" xml:space="preserve">
+    <value>option</value>
   </data>
   <data name="poolsDownload" xml:space="preserve">
     <value>http://xml.tab.co.nz/pools/</value>
   </data>
   <data name="quenellaDownload" xml:space="preserve">
     <value>http://xml.tab.co.nz/qla/</value>
+  </data>
+  <data name="raceRoot" xml:space="preserve">
+    <value>race</value>
   </data>
   <data name="resultsDownload" xml:space="preserve">
     <value>http://xml.tab.co.nz/results/</value>

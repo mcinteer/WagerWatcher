@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WagerWatcher.Model
+namespace WagerWatcher.Controller
 {
-    public partial class Race
+    public class ScheduleController
     {
-
+        
     }
 }
