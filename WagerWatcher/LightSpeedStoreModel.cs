@@ -422,7 +422,7 @@ namespace WagerWatcher
     private System.Nullable<System.Guid> _courseId;
 
     #endregion
-    
+     
     #region Field attribute and view names
     
     /// <summary>Identifies the MDate entity attribute.</summary>
