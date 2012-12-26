@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<model xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" connectionString="Data Source=localhost;Initial Catalog=WagerWatcher;Integrated Security=True;Pooling=False" name="" defaultIdentityGenerator="HiLo" xmlns="http://namespaces.mindscape.co.nz/nhmodel">
+  <entities>
+    <entity name="Bet" tableName="Bet">
+      <entityProperties>
+        <entityProperty name="BetTypeId" columnName="BetTypeID" isNullable="true" dataType="Guid" />
+        <entityProperty name="RaceId" columnName="RaceID" isNullable="true" dataType="Guid" />
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="BetId" columnName="BetID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="5584a254-e99f-4212-976a-fe583f8c2812" collectionName="BetLines" keyColumnName="BetID" backreferenceName="Bet">
+          <entityMoniker name="//BetLine" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="RaceCourse" tableName="RaceCourse">
+      <entityProperties>
+        <entityProperty name="CourseName" columnName="CourseName">
+          <validations>
+            <notNullValidation />
+          </validations>
+        </entityProperty>
+        <entityProperty name="CoursePhone" columnName="CoursePhone" isNullable="true" dataType="Int32" />
+        <entityProperty name="CourseAddress" size="50" columnName="CourseAddress" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="CourseId" columnName="CourseID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="ea50655e-e58a-4515-a668-4c8b551874f7" collectionName="Meetings" keyColumnName="CourseID" backreferenceName="Course">
+          <entityMoniker name="//Meeting" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="BetLine" tableName="BetLines">
+      <entityProperties>
+        <entityProperty name="Position" columnName="Position" dataType="Int32" />
+        <entityProperty name="HorseInBetId" columnName="HorseInBetID" isNullable="true" dataType="Guid" />
+        <entityProperty name="BetId" columnName="BetID" isNullable="true" dataType="Guid" />
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="BetLineId" columnName="BetLineID" dataType="Guid" />
+      </identityProperties>
+    </entity>
+    <entity name="BetType" tableName="BetType">
+      <entityProperties>
+        <entityProperty name="BetTypeDesc" size="20" columnName="BetTypeDesc" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="BetTypeId" columnName="BetTypeID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="7f549ab4-21ec-4493-a469-8ba05c9a758e" collectionName="Bets" keyColumnName="BetTypeID" backreferenceName="BetType">
+          <entityMoniker name="//Bet" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Class" tableName="Class">
+      <entityProperties>
+        <entityProperty name="ClassDesc" size="20" columnName="ClassDesc">
+          <validations>
+            <notNullValidation />
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="ClassId" columnName="ClassID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="d285ca30-472f-470a-8c78-abf426721de8" collectionName="Races" keyColumnName="ClassID" backreferenceName="Class">
+          <entityMoniker name="//Race" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="FixedOption" tableName="FixedOption">
+      <entityProperties>
+        <entityProperty name="RaceId" columnName="RaceID" isNullable="true" dataType="Guid" />
+        <entityProperty name="OptionNum" columnName="OptionNum" isNullable="true" dataType="Int32" />
+        <entityProperty name="BetType" size="50" columnName="BetType" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="OptionId" columnName="OptionID" dataType="Guid" />
+      </identityProperties>
+    </entity>
+    <entity name="Horse" tableName="Horse">
+      <entityProperties>
+        <entityProperty name="HorseName" size="20" columnName="HorseName">
+          <validations>
+            <notNullValidation />
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="StakesWon" columnName="StakesWon" isNullable="true" dataType="Decimal" />
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="HorseId" columnName="HorseID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="9d8e02de-2015-44da-8a1a-d5e01077fdca" collectionName="HorseInRaces" keyColumnName="HorseID" backreferenceName="Horse">
+          <entityMoniker name="//HorseInRace" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="HorseInBet" tableName="HorseInBet">
+      <entityProperties>
+        <entityProperty name="EntryId" columnName="EntryID" isNullable="true" dataType="Guid" />
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="HorseBetId" columnName="HorseBetID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="887e8243-43f2-4a14-8e47-083a77b9d82e" collectionName="BetLines" keyColumnName="HorseInBetID" backreferenceName="HorseInBet">
+          <entityMoniker name="//BetLine" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="HorseInRace" tableName="HorseInRace">
+      <entityProperties>
+        <entityProperty name="HorseId" columnName="HorseID" isNullable="true" dataType="Guid" />
+        <entityProperty name="RaceId" columnName="RaceID" isNullable="true" dataType="Guid" />
+        <entityProperty name="JockeyId" columnName="JockeyID" isNullable="true" dataType="Guid" />
+        <entityProperty name="Name" size="20" columnName="Name" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Number" columnName="Number" isNullable="true" dataType="Int32" />
+        <entityProperty name="Scratched" columnName="Scratched" isNullable="true" dataType="Int32" />
+        <entityProperty name="Barrier" size="5" columnName="Barrier" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="5" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="JockeyWeight" columnName="JockeyWeight" isNullable="true" dataType="Decimal" />
+        <entityProperty name="JockeyAllowance" size="10" columnName="JockeyAllowance" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="EntryId" columnName="EntryID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="5530034f-a24e-46a5-87eb-2ce11373089b" collectionName="HorseInBets" keyColumnName="EntryID" backreferenceName="Entry">
+          <entityMoniker name="//HorseInBet" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Jockey" tableName="Jockey">
+      <entityProperties>
+        <entityProperty name="JockeyName" size="50" columnName="JockeyName" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="JockeyId" columnName="JockeyID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="9a6080b6-c0e2-4583-82e7-3a20360aa6fb" collectionName="HorseInRaces" keyColumnName="JockeyID" backreferenceName="Jockey">
+          <entityMoniker name="//HorseInRace" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Meeting" tableName="Meeting">
+      <entityProperties>
+        <entityProperty name="MDate" size="50" columnName="MDate">
+          <validations>
+            <notNullValidation />
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="JetBetCode" columnName="JetBetCode" dataType="Int32" />
+        <entityProperty name="CourseId" columnName="CourseID" isNullable="true" dataType="Guid" />
+        <entityProperty name="TrackDirection" size="15" columnName="TrackDirection" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="15" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="BetSlipType" size="50" columnName="BetSlipType" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Code" size="50" columnName="Code" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Country" size="50" columnName="Country" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Name" size="50" columnName="Name" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Penetrometer" size="50" columnName="Penetrometer" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="MeetingStatus" size="50" columnName="MeetingStatus" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="RaceType" size="50" columnName="RaceType" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Venue" size="50" columnName="Venue" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="MeetingId" columnName="MeetingID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="9850b69e-3c93-4385-87b8-327652d6b9b9" collectionName="Races" keyColumnName="MeetingID" backreferenceName="Meeting">
+          <entityMoniker name="//Race" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Race" tableName="Race">
+      <entityProperties>
+        <entityProperty name="RaceName" size="50" columnName="RaceName">
+          <validations>
+            <notNullValidation />
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="RaceNum" columnName="RaceNum" dataType="Int32" />
+        <entityProperty name="MeetingId" columnName="MeetingID" isNullable="true" dataType="Guid" />
+        <entityProperty name="ClassId" columnName="ClassID" isNullable="true" dataType="Guid" />
+        <entityProperty name="Distance" columnName="Distance" isNullable="true" dataType="Int32" />
+        <entityProperty name="Stake" size="50" columnName="Stake" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="TrackCondition" size="10" columnName="TrackCondition" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Weather" size="10" columnName="Weather" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="NormTime" size="50" columnName="NormTime" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="OverseasNumber" size="50" columnName="OverseasNumber" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="RaceStatus" size="50" columnName="RaceStatus" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Venue" size="50" columnName="Venue" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="RaceId" columnName="RaceID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="e76b8c19-65e0-43c6-b3d9-0ae2143231fb" collectionName="Bets" keyColumnName="RaceID" backreferenceName="Race">
+          <entityMoniker name="//Bet" />
+        </oneToManyAssociation>
+        <oneToManyAssociation Id="6fbdc1ab-c899-482e-a9eb-d5aafcabb799" collectionName="FixedOptions" keyColumnName="RaceID" backreferenceName="Race">
+          <entityMoniker name="//FixedOption" />
+        </oneToManyAssociation>
+        <oneToManyAssociation Id="385033a2-05cb-4f6a-a6ef-b2c478e73f4f" collectionName="HorseInRaces" keyColumnName="RaceID" backreferenceName="Race">
+          <entityMoniker name="//HorseInRace" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+  </entities>
+  <policies>
+    <defaultIdentityTypePolicy Id="d413128a-20e9-43d9-8f83-a711760d492c" identityType="Guid" />
+  </policies>
+</model>
