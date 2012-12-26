@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1D2F8BD8-1F91-401B-8B2F-EB23CC2BA629}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WagerWatcher</RootNamespace>
+    <AssemblyName>WagerWatcher</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mindscape.LightSpeed">
+      <HintPath>C:\Program Files (x86)\Mindscape\LightSpeed\Bin\Mindscape.LightSpeed.dll</HintPath>
+    </Reference>
+    <Reference Include="Mindscape.LightSpeed.Linq">
+      <HintPath>C:\Program Files (x86)\Mindscape\LightSpeed\Bin\Mindscape.LightSpeed.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Constants.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ClassController.cs" />
+    <Compile Include="Controller\EntryController.cs" />
+    <Compile Include="Controller\HorseController.cs" />
+    <Compile Include="Controller\JockeyController.cs" />
+    <Compile Include="Controller\MeetingController.cs" />
+    <Compile Include="Controller\MeetingsRootController.cs" />
+    <Compile Include="Controller\OptionController.cs" />
+    <Compile Include="Controller\RaceController.cs" />
+    <Compile Include="Controller\RaceCourseController.cs" />
+    <Compile Include="Controller\ScheduleController.cs" />
+    <Compile Include="Controller\XMLHelper.cs" />
+    <Compile Include="LightSpeedStoreModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LightSpeedStoreModel.lsmodel</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EntriesRootFromXML.cs" />
+    <Compile Include="Model\EntryFromXML.cs" />
+    <Compile Include="Model\MeetingFromXML.cs" />
+    <Compile Include="Model\OptionFromXML.cs" />
+    <Compile Include="Model\OptionsRootFromXML.cs" />
+    <Compile Include="Model\RaceFromXML.cs" />
+    <Compile Include="Model\RacesRootFromXML.cs" />
+    <Compile Include="Model\MeetingsRootFromXML.cs" />
+    <Compile Include="Model\ScheduleFromXML.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="LightSpeedStoreModel.lsmodel">
+      <Generator>LightSpeedModelGenerator</Generator>
+      <LastGenOutput>LightSpeedStoreModel.cs</LastGenOutput>
+    </None>
+    <None Include="LightSpeedStoreModel.lsmodel.diagram">
+      <DependentUpon>LightSpeedStoreModel.lsmodel</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Constants.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Constants.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
