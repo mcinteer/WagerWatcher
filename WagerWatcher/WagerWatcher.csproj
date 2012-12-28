@@ -35,14 +35,35 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\Lib\Iesi.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Mindscape.LightSpeed">
       <HintPath>C:\Program Files (x86)\Mindscape\LightSpeed\Bin\Mindscape.LightSpeed.dll</HintPath>
     </Reference>
     <Reference Include="Mindscape.LightSpeed.Linq">
       <HintPath>C:\Program Files (x86)\Mindscape\LightSpeed\Bin\Mindscape.LightSpeed.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\Lib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ByteCode.LinFu">
+      <HintPath>..\Lib\NHibernate.ByteCode.LinFu.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Validator">
+      <HintPath>..\Lib\NHibernate.Validator.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.1.0.82.0\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\packages\System.Data.SQLite.1.0.82.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,19 +79,17 @@
     <Compile Include="Controller\ClassController.cs" />
     <Compile Include="Controller\EntryController.cs" />
     <Compile Include="Controller\HorseController.cs" />
-    <Compile Include="Controller\JockeyController.cs" />
     <Compile Include="Controller\MeetingController.cs" />
     <Compile Include="Controller\MeetingsRootController.cs" />
+    <Compile Include="Repositories\ClassRepository.cs" />
+    <Compile Include="Repositories\HorseRepository.cs" />
+    <Compile Include="Repositories\MeetingRepository.cs" />
+    <Compile Include="Repositories\NHibernateHelper.cs" />
     <Compile Include="Controller\OptionController.cs" />
     <Compile Include="Controller\RaceController.cs" />
     <Compile Include="Controller\RaceCourseController.cs" />
     <Compile Include="Controller\ScheduleController.cs" />
     <Compile Include="Controller\XMLHelper.cs" />
-    <Compile Include="LightSpeedStoreModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LightSpeedStoreModel.lsmodel</DependentUpon>
-    </Compile>
     <Compile Include="Model\EntriesRootFromXML.cs" />
     <Compile Include="Model\EntryFromXML.cs" />
     <Compile Include="Model\MeetingFromXML.cs" />
@@ -80,20 +99,28 @@
     <Compile Include="Model\RacesRootFromXML.cs" />
     <Compile Include="Model\MeetingsRootFromXML.cs" />
     <Compile Include="Model\ScheduleFromXML.cs" />
+    <Compile Include="NHibernateModel2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NHibernateModel2.nhmodel</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\OptionRepository.cs" />
+    <Compile Include="Repositories\RaceRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="LightSpeedStoreModel.lsmodel">
-      <Generator>LightSpeedModelGenerator</Generator>
-      <LastGenOutput>LightSpeedStoreModel.cs</LastGenOutput>
+    <None Include="NHibernateModel2.nhmodel">
+      <Generator>NHibernateModelGenerator</Generator>
+      <LastGenOutput>NHibernateModel2.cs</LastGenOutput>
     </None>
-    <None Include="LightSpeedStoreModel.lsmodel.diagram">
-      <DependentUpon>LightSpeedStoreModel.lsmodel</DependentUpon>
+    <None Include="NHibernateModel2.nhmodel.diagram">
+      <DependentUpon>NHibernateModel2.nhmodel</DependentUpon>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -103,6 +130,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Constants.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

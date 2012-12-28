@@ -2,31 +2,29 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Xml.Serialization;
-using Mindscape.LightSpeed;
 using System.Resources;
 using System.Xml;
 using System.Xml.XPath;
+using NHibernate;
 using WagerWatcher.Controller;
 using WagerWatcher.Model;
+using WagerWatcher.Repositories;
 
 namespace WagerWatcher
 {
-    class Program
+    public class Program
     {
-        internal static LightSpeedContext<LightSpeedStoreModelUnitOfWork> Context;
-        public static int Test;
+        public static ISession Session;
+        
 
         static void Main(string[] args)
         {
-            Test = 0;
-            Context = new LightSpeedContext<LightSpeedStoreModelUnitOfWork>("default")
-                {
-                    IdentityMethod = IdentityMethod.Guid
-                };
-
-            var meetings = Objectify("2012-12-22");
+            
+            Session = NHibernateHelper.OpenSession();
+            var meetings = Objectify("2012-12-28");
             UpdateDataBase(meetings);
 
             /*GetSchedule("2012-12-09");*/
@@ -34,8 +32,6 @@ namespace WagerWatcher
 
         public static void UpdateDataBase(MeetingsRootFromXML xmlMeetings)
         {
-            Test += 1;
-            var unitOfWork = Context.CreateUnitOfWork();
             foreach (var xmlMeeting in xmlMeetings.Meetings)
             {
                 var meeting = MeetingController.GetMeetingForDB(xmlMeeting);
@@ -45,9 +41,14 @@ namespace WagerWatcher
                 {
                     var race = RaceController.BuildRaceForDB(xmlRace, meeting);
 
-                    foreach (var xmlOption in xmlRace.OptionsRoot.Options)
+                    var raceRepo = new RaceRepository();
+                    raceRepo.Add(race);
+
+                    /* foreach (var xmlOption in xmlRace.OptionsRoot.Options)
                     {
-                        var option = OptionController.GetOptionForDB(xmlOption);
+                        var option = OptionController.BuildOptionForDB(xmlOption);
+                        
+
                         unitOfWork.Add(option);
                     }
 
@@ -57,12 +58,10 @@ namespace WagerWatcher
                         unitOfWork.Add(entry);
 
 
-                    }
+                    }*/
                 }
                 
             }
-            unitOfWork.SaveChanges();
-            unitOfWork.Dispose();
             /*foreach (var entry in xmlMeetings.Meetings.SelectMany(xmlMeeting => (
                 from xmlRace in xmlMeeting.RacesRoot.Races 
                 from xmlEntry in xmlRace.Entries.Entries 
@@ -75,7 +74,6 @@ namespace WagerWatcher
 
         private static MeetingsRootFromXML Objectify(string s)
         {
-            var uow = Context.CreateUnitOfWork();
             var scheduleDoc = new XmlDocument();
             scheduleDoc.Load(Constants.scheduleDownload + s);
             var scheduleNode = scheduleDoc.SelectSingleNode("schedule/meetings");

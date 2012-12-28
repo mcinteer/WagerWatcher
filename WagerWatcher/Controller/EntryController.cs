@@ -8,7 +8,7 @@ namespace WagerWatcher.Controller
 {
     public class EntryController
     {
-        public static HorseInRace BuildEntryForDB(EntryFromXML xmlEntry, Race race)
+        public static HorseInRace BuildEntryForDB(EntryFromXML xmlEntry/*, Race race*/)
         {
             
 
@@ -19,12 +19,12 @@ namespace WagerWatcher.Controller
             var horseInRace = new HorseInRace
                 {
                     Barrier = xmlEntry.Barrier,
-                    Jockey = JockeyController.GetJockey(xmlEntry.Jockey),
+                    JockeyName = xmlEntry.Jockey,
                     JockeyAllowance = xmlEntry.JockeyAllowance,
                     JockeyWeight = decimal.Parse(xmlEntry.JockeyWeight),
                     Name = xmlEntry.Name,
                     Number = int.Parse(xmlEntry.Number),
-                    Race = race,
+                   /* Race = race,*/
                     Scratched = int.Parse(xmlEntry.Scratched),
                     Horse = HorseController.GetHorse(xmlEntry)
                 };

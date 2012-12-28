@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WagerWatcher.Repositories;
 
 namespace WagerWatcher.Controller
 {
     public class ClassController
     {
-        private static Class BuildClassForDB(string classDesc = "description")
+        public static Class BuildClassForDB(string classDesc)
         {
-            if (classDesc == null) classDesc = "description";
+            if (classDesc == null) classDesc = "NOT SPECIFIED";
             var newClass = new Class
                 {
                     ClassDesc = classDesc
@@ -17,20 +18,10 @@ namespace WagerWatcher.Controller
             return newClass;
         }
 
-        public static Class GetClass(string desc)
+        public static Class GetClass(string desc = "NOT SPECIFIED")
         {
             if (desc == null) desc = "description";
-            var uow = Program.Context.CreateUnitOfWork();
-            var retVal = uow.Classes.FirstOrDefault(x => x.ClassDesc == desc);
-            if (retVal == null)
-            {
-                retVal = BuildClassForDB(desc);
-                uow.Add(retVal);
-                uow.SaveChanges();
-                
-            }
-            uow.Dispose();
-            return retVal;
+            return ClassRepository.GetByDesc(desc);
         }
     }
 }

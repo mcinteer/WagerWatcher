@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,10 @@ namespace WagerWatcher.Controller
     {
         public static Race BuildRaceForDB(RaceFromXML xmlRace, Meeting meeting = null)
         {
+            IList<FixedOption> options = 
+                xmlRace.OptionsRoot.Options.Select(OptionController.BuildOptionForDB).ToList();
+            IList<HorseInRace> entries = 
+                xmlRace.Entries.Entries.Select(EntryController.BuildEntryForDB).ToList();
             var race = new Race()
                 {
                     Class = ClassController.GetClass(xmlRace.Class),
@@ -23,7 +28,9 @@ namespace WagerWatcher.Controller
                     TrackCondition = xmlRace.Track,
                     Venue = xmlRace.Venue,
                     Weather = xmlRace.Weather,
-                    Meeting = meeting
+                    Meeting = meeting,
+                    FixedOptions = options,
+                    HorseInRaces = entries
                 };
             return race;
         }

@@ -8,7 +8,7 @@ namespace WagerWatcher.Controller
 {
     public class OptionController
     {
-        public static FixedOption GetOptionForDB(OptionFromXML xmlOption)
+        public static FixedOption BuildOptionForDB(OptionFromXML xmlOption)
         {
             var option = new FixedOption
                 {
