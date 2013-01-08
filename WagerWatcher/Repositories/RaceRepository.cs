@@ -41,7 +41,7 @@ namespace WagerWatcher.Repositories
             }
         }
 
-        public Race GetByID(Guid id)
+        public static Race GetByID(Guid id)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
@@ -49,18 +49,12 @@ namespace WagerWatcher.Repositories
             }
         }
 
-        public Race GetRaceByDateAndJetBetCodeAndRaceNumber(string date, string jetBetCode, string raceNumber)
+        public static Race GetRaceByDateAndJetBetCodeAndRaceNumber(string date, int jetBetCode, int raceNumber)
         {
-            Race race;
-            using (var session = NHibernateHelper.OpenSession())
-            {
-                race = session
-                   .CreateCriteria(typeof(Race))
-                   .Add(Restrictions.Eq("MDate", date))
-                   .Add(Restrictions.Eq("JetBetCode", jetBetCode))
-                   .UniqueResult<Race>();
-            }
-            return race;
+            var raceResult = RaceResultRepository.GetRaceByDateAndJetBetCodeAndRaceNumber(date,
+                                                                                          jetBetCode,
+                                                                                          raceNumber);
+            return GetByID(raceResult.RaceId);            
         }
     }
 }

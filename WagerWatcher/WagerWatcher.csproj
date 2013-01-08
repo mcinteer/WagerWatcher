@@ -123,6 +123,7 @@
     <Compile Include="Repositories\OptionRepository.cs" />
     <Compile Include="Repositories\RaceBetTypeRepository.cs" />
     <Compile Include="Repositories\RaceRepository.cs" />
+    <Compile Include="Repositories\RaceResultRepository.cs" />
     <Compile Include="Repositories\ResultRepository.cs" />
   </ItemGroup>
   <ItemGroup>

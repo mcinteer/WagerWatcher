@@ -90,7 +90,7 @@
         <entityShapeMoniker Id="1d9c7cbe-380b-4fd6-ad44-209f158d793e" />
       </nodes>
     </oneToManyAssociationConnector>
-    <oneToManyAssociationConnector Id="5ef3dd86-d0ef-411c-9a9c-5a5ec9e40e39" edgePoints="[(4.5 : 4.375); (4.5 : 4); (5.01041666666667 : 4 : JumpStart); (5.17708333333333 : 4 : JumpEnd); (6.04166616666667 : 4 : JumpStart); (6.20833283333333 : 4 : JumpEnd); (9.01041666666667 : 4 : JumpStart); (9.17708333333333 : 4 : JumpEnd); (10 : 4); (10 : 5.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <oneToManyAssociationConnector Id="5ef3dd86-d0ef-411c-9a9c-5a5ec9e40e39" edgePoints="[(4.5 : 4.375); (4.5 : 4); (4.82291916666667 : 4 : JumpStart); (4.98958583333333 : 4 : JumpEnd); (6.04166616666667 : 4 : JumpStart); (6.20833283333333 : 4 : JumpEnd); (9.01041666666667 : 4 : JumpStart); (9.17708333333333 : 4 : JumpEnd); (10 : 4); (10 : 5.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <oneToManyAssociationMoniker Id="e75d3327-8c07-4009-8dfd-031f1a2b1848" />
       <relativeChildShapes />
       <nodes>
@@ -135,7 +135,7 @@
         <entityShapeMoniker Id="77dfda04-a883-492e-95d0-b19a003ae912" />
       </nodes>
     </oneToManyAssociationConnector>
-    <oneToManyAssociationConnector Id="0aafe5cf-5091-42ff-8b28-de001a236ce3" edgePoints="[(14.75 : 6.02669108072917); (11 : 6.02669108072917); (11 : 4.125); (10.0833333333333 : 4.125 : JumpStart); (9.91666666666667 : 4.125 : JumpEnd); (9.17708333333333 : 4.125 : JumpStart); (9.01041666666667 : 4.125 : JumpEnd); (6.20833283333333 : 4.125 : JumpStart); (6.04166616666667 : 4.125 : JumpEnd); (5.17708333333333 : 4.125 : JumpStart); (5.01041666666667 : 4.125 : JumpEnd); (4.58333333333333 : 4.125 : JumpStart); (4.41666666666667 : 4.125 : JumpEnd); (1.5 : 4.125); (1.5 : 3.87068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <oneToManyAssociationConnector Id="0aafe5cf-5091-42ff-8b28-de001a236ce3" edgePoints="[(14.75 : 6.02669108072917); (11 : 6.02669108072917); (11 : 4.125); (10.0833333333333 : 4.125 : JumpStart); (9.91666666666667 : 4.125 : JumpEnd); (9.17708333333333 : 4.125 : JumpStart); (9.01041666666667 : 4.125 : JumpEnd); (6.20833283333333 : 4.125 : JumpStart); (6.04166616666667 : 4.125 : JumpEnd); (4.98958583333333 : 4.125 : JumpStart); (4.82291916666667 : 4.125 : JumpEnd); (4.58333333333333 : 4.125 : JumpStart); (4.41666666666667 : 4.125 : JumpEnd); (1.5 : 4.125); (1.5 : 3.87068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <oneToManyAssociationMoniker Id="4b7c3d49-796a-43a4-b018-5995d9d36a1c" />
       <relativeChildShapes />
       <nodes>
@@ -143,7 +143,7 @@
         <entityShapeMoniker Id="21d60e1a-9168-4f6e-b065-239bec1f7224" />
       </nodes>
     </oneToManyAssociationConnector>
-    <oneToManyAssociationConnector Id="0f21e2dd-c08c-4a38-a817-ee437b0d6084" edgePoints="[(5.09375 : 4.375); (5.09375 : 3.40673502604167); (2.25 : 3.40673502604167)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <oneToManyAssociationConnector Id="0f21e2dd-c08c-4a38-a817-ee437b0d6084" edgePoints="[(4.9062525 : 4.375); (4.9062525 : 3.4403857421875); (2.25 : 3.4403857421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <oneToManyAssociationMoniker Id="9d88eed6-f07e-46b1-b388-0a8fffc85d4c" />
       <relativeChildShapes />
       <nodes>
@@ -174,7 +174,7 @@
         <entityShapeMoniker Id="77dfda04-a883-492e-95d0-b19a003ae912" />
       </nodes>
     </oneToManyAssociationConnector>
-    <oneToManyAssociationConnector Id="519b9dd8-39bb-4c55-9ab1-5f62e9172d82" edgePoints="[(1.906252 : 3.87068359375); (1.906252 : 4.11287109375); (4.41666666666667 : 4.11287109375 : JumpStart); (4.58333333333333 : 4.11287109375 : JumpEnd); (5.01041666666667 : 4.11287109375 : JumpStart); (5.17708333333333 : 4.11287109375 : JumpEnd); (6.04166616666667 : 4.11287109375 : JumpStart); (6.20833283333333 : 4.11287109375 : JumpEnd); (9.01041666666667 : 4.11287109375 : JumpStart); (9.17708333333333 : 4.11287109375 : JumpEnd); (9.91666666666667 : 4.11287109375 : JumpStart); (10.0833333333333 : 4.11287109375 : JumpEnd); (11.5 : 4.11287109375); (11.5 : 4.43798502604167); (14.375 : 4.43798502604167); (14.375 : 3.04459354036458); (14.75 : 3.04459354036458)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <oneToManyAssociationConnector Id="519b9dd8-39bb-4c55-9ab1-5f62e9172d82" edgePoints="[(1.906252 : 3.87068359375); (1.906252 : 4.12068359375); (4.41666666666667 : 4.12068359375 : JumpStart); (4.58333333333333 : 4.12068359375 : JumpEnd); (4.82291916666667 : 4.12068359375 : JumpStart); (4.98958583333333 : 4.12068359375 : JumpEnd); (6.04166616666667 : 4.12068359375 : JumpStart); (6.20833283333333 : 4.12068359375 : JumpEnd); (9.01041666666667 : 4.12068359375 : JumpStart); (9.17708333333333 : 4.12068359375 : JumpEnd); (9.91666666666667 : 4.12068359375 : JumpStart); (10.0833333333333 : 4.12068359375 : JumpEnd); (11.5 : 4.12068359375); (11.5 : 4.43798502604167); (14.375 : 4.43798502604167); (14.375 : 3.04459354036458); (14.75 : 3.04459354036458)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <oneToManyAssociationMoniker Id="f2eac901-7ba4-4192-b790-73d111913a14" />
       <relativeChildShapes />
       <nodes>
@@ -182,5 +182,12 @@
         <entityShapeMoniker Id="6442f481-5eee-4cc3-9f48-7935c66a53d0" />
       </nodes>
     </oneToManyAssociationConnector>
+    <entityShape Id="eddebc09-848b-490f-bc97-5cb1ad2e621e" absoluteBounds="2.625, 0.875, 1.5, 2.072587890625">
+      <entityMoniker name="//RaceResult" />
+      <nestedChildShapes>
+        <elementListCompartment Id="748c7c39-5204-4d49-8097-64db941ab4ff" absoluteBounds="2.64, 1.185, 1.4700000000000002, 0.44169108072916663" name="Identity" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="0d8620ad-6b68-41d0-a0d1-5ec1789c60ba" absoluteBounds="2.64, 1.6366910807291666, 1.4700000000000002, 1.2108968098958333" name="Properties" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </entityShape>
   </nestedChildShapes>
 </nHibernateModelDiagram>

@@ -879,6 +879,62 @@ namespace WagerWatcher
     }
   }
 
+  [System.CodeDom.Compiler.GeneratedCode("NHibernateModelGenerator", "1.0.0.0")]
+  public partial class RaceResult
+  {
+    public virtual int RaceResultID { get; set; }
+    public virtual System.Guid MeetingId { get; set; }
+    public virtual int JetBetCode { get; set; }
+    [NotNull]
+    [Length(Max=50)]
+    public virtual string MDate { get; set; }
+    public virtual System.Guid RaceId { get; set; }
+    public virtual int Racenum { get; set; }
+
+    static partial void CustomizeMappingDocument(System.Xml.Linq.XDocument mappingDocument);
+
+    internal static System.Xml.Linq.XDocument MappingXml
+    {
+      get
+      {
+        var mappingDocument = System.Xml.Linq.XDocument.Parse(@"<?xml version='1.0' encoding='utf-8' ?>
+<hibernate-mapping xmlns='urn:nhibernate-mapping-2.2'
+                   assembly='" + typeof(RaceResult).Assembly.GetName().Name + @"'
+                   namespace='WagerWatcher'
+                   default-cascade='save-update'
+                   >
+  <class name='RaceResult'
+         table='`RaceResult`'
+         >
+    <id name='RaceResultID'
+        column='`RaceResultID`'
+        >
+      <generator class='guid'>
+      </generator>
+    </id>
+    <property name='MeetingId'
+              column='`MeetingID`'
+              />
+    <property name='JetBetCode'
+              column='`JetBetCode`'
+              />
+    <property name='MDate'
+              column='`MDate`'
+              />
+    <property name='RaceId'
+              column='`RaceID`'
+              />
+    <property name='Racenum'
+              column='`racenum`'
+              />
+  </class>
+</hibernate-mapping>");
+        CustomizeMappingDocument(mappingDocument);
+        return mappingDocument;
+      }
+    }
+  }
+
 
   /// <summary>
   /// Provides a NHibernate configuration object containing mappings for this model.
@@ -916,6 +972,7 @@ namespace WagerWatcher
       configuration.AddXml(EntrantInResult.MappingXml.ToString());
       configuration.AddXml(RaceBetType.MappingXml.ToString());
       configuration.AddXml(Result.MappingXml.ToString());
+      configuration.AddXml(RaceResult.MappingXml.ToString());
       configuration.AddAssembly(typeof(ConfigurationHelper).Assembly);
     }
 

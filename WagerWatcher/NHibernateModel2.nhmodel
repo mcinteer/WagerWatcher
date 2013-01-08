@@ -304,5 +304,22 @@
         </oneToManyAssociation>
       </oneToManyAssociations>
     </entity>
+    <entity name="RaceResult" accessMethod="View">
+      <entityProperties>
+        <entityProperty name="MeetingId" columnName="MeetingID" dataType="Guid" />
+        <entityProperty name="JetBetCode" columnName="JetBetCode" dataType="Int32" />
+        <entityProperty name="MDate" size="50" columnName="MDate">
+          <validations>
+            <notNullValidation />
+            <lengthValidation minimumLength="0" maximumLength="50" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="RaceId" columnName="RaceID" dataType="Guid" />
+        <entityProperty name="Racenum" columnName="racenum" dataType="Int32" />
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="RaceResultID" />
+      </identityProperties>
+    </entity>
   </entities>
 </model>

@@ -19,7 +19,7 @@ namespace WagerWatcher
     public class Program
     {
         public static ISession Session;
-        private const string Date = "2013-01-08";
+        private const string Date = "2013-01-05";
 
         static void Main(string[] args)
         {
@@ -60,9 +60,12 @@ namespace WagerWatcher
             {
                 var meeting = MeetingRepository.GetMeetingByDateAndJetBetCode(resultsXMLMeetings.Date,
                                                                               xmlMeeting.JetBetCode);
-                foreach (var race in meeting.Races)
+                foreach (var xmlRace in meeting.Races)
                 {
-                    
+                    var race = RaceRepository.GetRaceByDateAndJetBetCodeAndRaceNumber(meeting.MDate,
+                                                                                      meeting.JetBetCode,
+                                                                                      xmlRace.RaceNum);
+                    //ResultController.BuildResult(pass in the correct races result node);
                 }
             }
         }
