@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.Collections;
-namespace WagerWatcher.Model
+
+namespace WagerWatcher.Model.Schedule
 {
     [Serializable, XmlRoot("entries")]
-    public class EntriesRootFromXML
+    public class XMLEntriesRootFromSchedule
     {
         [XmlElement("entry")]
-        public List<EntryFromXML> Entries { get; set; }
+        public List<XMLEntryFromSchedule> Entries { get; set; }
     }
 
    

@@ -48,5 +48,19 @@ namespace WagerWatcher.Repositories
                 return session.Get<Race>(id);
             }
         }
+
+        public Race GetRaceByDateAndJetBetCodeAndRaceNumber(string date, string jetBetCode, string raceNumber)
+        {
+            Race race;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                race = session
+                   .CreateCriteria(typeof(Race))
+                   .Add(Restrictions.Eq("MDate", date))
+                   .Add(Restrictions.Eq("JetBetCode", jetBetCode))
+                   .UniqueResult<Race>();
+            }
+            return race;
+        }
     }
 }

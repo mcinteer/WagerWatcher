@@ -4,27 +4,28 @@ using System.Linq;
 using System.Text;
 using Mindscape.LightSpeed;
 using WagerWatcher.Model;
+using WagerWatcher.Model.Schedule;
 
 namespace WagerWatcher.Controller
 {
     public class MeetingController
     {
-        public static Meeting GetMeetingForDB(MeetingFromXML xmlMeeting)
+        public static Meeting GetMeetingFromScheduleForDB(XMLMeetingFromSchedule scheduleXMLMeeting)
         {
             var meeting = new Meeting()
                 {
-                    BetSlipType = xmlMeeting.BetslipType,
-                    Code = xmlMeeting.Code,
-                    Country = xmlMeeting.Country,
-                    Course = RaceCourseController.BuildCourse(xmlMeeting.Venue),
-                    JetBetCode = int.Parse(xmlMeeting.Number),
-                    MDate = xmlMeeting.Date,
-                    MeetingStatus = xmlMeeting.Status,
-                    Name = xmlMeeting.Name,
-                    Penetrometer = xmlMeeting.Penetrometer,
-                    RaceType = xmlMeeting.Type,
-                    TrackDirection = xmlMeeting.TrackDirection,
-                    Venue = xmlMeeting.Venue
+                    BetSlipType = scheduleXMLMeeting.BetslipType,
+                    Code = scheduleXMLMeeting.Code,
+                    Country = scheduleXMLMeeting.Country,
+                    Course = RaceCourseController.BuildCourse(scheduleXMLMeeting.Venue),
+                    JetBetCode = int.Parse(scheduleXMLMeeting.Number),
+                    MDate = scheduleXMLMeeting.Date,
+                    MeetingStatus = scheduleXMLMeeting.Status,
+                    Name = scheduleXMLMeeting.Name,
+                    Penetrometer = scheduleXMLMeeting.Penetrometer,
+                    RaceType = scheduleXMLMeeting.Type,
+                    TrackDirection = scheduleXMLMeeting.TrackDirection,
+                    Venue = scheduleXMLMeeting.Venue
                 };
             return meeting;
         }

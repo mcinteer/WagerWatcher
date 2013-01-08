@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 
-namespace WagerWatcher.Model
+namespace WagerWatcher.Model.Schedule
 {
     [Serializable, XmlRoot("race")]
-    public class RaceFromXML
+    public class XMLRaceFromSchedule
     {
         [XmlElement("class")]
         public string Class { get; set; }
@@ -43,10 +40,10 @@ namespace WagerWatcher.Model
         public string Weather { get; set; }
 
         [XmlElement("options")]
-        public OptionsRootFromXML OptionsRoot { get; set; }
+        public XMLOptionsRootFromSchedule OptionsRoot { get; set; }
 
         [XmlElement("entries")]
-        public EntriesRootFromXML Entries { get; set; }
+        public XMLEntriesRootFromSchedule Entries { get; set; }
     }
 
     

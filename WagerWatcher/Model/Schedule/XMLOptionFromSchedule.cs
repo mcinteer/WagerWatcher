@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 
-namespace WagerWatcher.Model
+namespace WagerWatcher.Model.Schedule
 {
     [Serializable, XmlRoot("Option")]
-    public class OptionFromXML
+    public class XMLOptionFromSchedule
     {
         [XmlElement("number")]
         public string Number { get; set; }

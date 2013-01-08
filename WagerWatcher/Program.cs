@@ -11,6 +11,7 @@ using System.Xml.XPath;
 using NHibernate;
 using WagerWatcher.Controller;
 using WagerWatcher.Model;
+using WagerWatcher.Model.Results;
 using WagerWatcher.Repositories;
 
 namespace WagerWatcher
@@ -18,23 +19,29 @@ namespace WagerWatcher
     public class Program
     {
         public static ISession Session;
-        
+        private const string Date = "2013-01-08";
 
         static void Main(string[] args)
         {
-            
             Session = NHibernateHelper.OpenSession();
-            var meetings = Objectify("2012-12-28");
-            UpdateDataBase(meetings);
+            var meetingsFromSchedule = GetMeetingsRootFromSchedule(Date);
+            var meetingsFromResults = GetXMLMeetingsRootFromResults(Date);
+            UpdateDataBase(meetingsFromSchedule, meetingsFromResults);
 
-            /*GetSchedule("2012-12-09");*/
         }
 
-        public static void UpdateDataBase(MeetingsRootFromXML xmlMeetings)
+        
+
+        public static void UpdateDataBase(XMLMeetingsRootFromSchedule xmlMeetingsFromSchedule, XMLMeetingsRootFromResults xmlMeetingsFromResults)
         {
-            foreach (var xmlMeeting in xmlMeetings.Meetings)
+            UpdateSchedule(xmlMeetingsFromSchedule);
+        }
+
+        private static void UpdateSchedule(XMLMeetingsRootFromSchedule scheduleXMLMeetings)
+        {
+            foreach (var xmlMeeting in scheduleXMLMeetings.Meetings)
             {
-                var meeting = MeetingController.GetMeetingForDB(xmlMeeting);
+                var meeting = MeetingController.GetMeetingFromScheduleForDB(xmlMeeting);
 
 
                 foreach (var xmlRace in xmlMeeting.RacesRoot.Races)
@@ -43,91 +50,57 @@ namespace WagerWatcher
 
                     var raceRepo = new RaceRepository();
                     raceRepo.Add(race);
-
-                    /* foreach (var xmlOption in xmlRace.OptionsRoot.Options)
-                    {
-                        var option = OptionController.BuildOptionForDB(xmlOption);
-                        
-
-                        unitOfWork.Add(option);
-                    }
-
-                    foreach (var xmlEntry in xmlRace.Entries.Entries)
-                    {
-                        var entry = EntryController.BuildEntryForDB(xmlEntry, race);
-                        unitOfWork.Add(entry);
-
-
-                    }*/
                 }
-                
             }
-            /*foreach (var entry in xmlMeetings.Meetings.SelectMany(xmlMeeting => (
-                from xmlRace in xmlMeeting.RacesRoot.Races 
-                from xmlEntry in xmlRace.Entries.Entries 
-                select EntryController.BuildEntryForDB(xmlEntry, xmlRace, xmlMeeting))))
-            {
-                unitOfWork.Add(entry);
-            }
-            unitOfWork.SaveChanges();*/
         }
 
-        private static MeetingsRootFromXML Objectify(string s)
+        public static void UpdateResults(XMLMeetingsRootFromResults resultsXMLMeetings)
+        {
+            foreach (var xmlMeeting in resultsXMLMeetings.Meetings)
+            {
+                var meeting = MeetingRepository.GetMeetingByDateAndJetBetCode(resultsXMLMeetings.Date,
+                                                                              xmlMeeting.JetBetCode);
+                foreach (var race in meeting.Races)
+                {
+                    
+                }
+            }
+        }
+
+
+
+
+        private static XMLMeetingsRootFromSchedule GetMeetingsRootFromSchedule(string date)
         {
             var scheduleDoc = new XmlDocument();
-            scheduleDoc.Load(Constants.scheduleDownload + s);
-            var scheduleNode = scheduleDoc.SelectSingleNode("schedule/meetings");
+            scheduleDoc.Load(Constants.scheduleDownload + date);
+            var scheduleNode = scheduleDoc.SelectSingleNode("//meetings");
             if (scheduleNode == null) return null;
-            MeetingsRootFromXML meetings = null;
+            XMLMeetingsRootFromSchedule xmlMeetings = null;
             using (var reader = new StringReader(scheduleNode.OuterXml))
             {
-                var serializer = new XmlSerializer(typeof (MeetingsRootFromXML));
-                meetings = (MeetingsRootFromXML) serializer.Deserialize(reader);
+                var serializer = new XmlSerializer(typeof (XMLMeetingsRootFromSchedule));
+                xmlMeetings = (XMLMeetingsRootFromSchedule) serializer.Deserialize(reader);
             }
-            return meetings;
+            return xmlMeetings;
         }
 
-
-
-
-        /*private static void ObjectifyV(string s)
+        private static XMLMeetingsRootFromResults GetXMLMeetingsRootFromResults(string date)
         {
-            var uow = _context.CreateUnitOfWork();
-            var scheduleDoc = new XmlDocument();
-            scheduleDoc.Load(Constants.scheduleDownload + s);
-            XmlNode scheduleNode = scheduleDoc.SelectSingleNode("schedule/meetings");
-            if (scheduleNode == null) return;
-            MeetingsRoot schedule = null;
-            var meetings = new List<Meeting>();
-            using (var reader = new StringReader(scheduleNode.OuterXml))
+            var resultsDoc = new XmlDocument();
+            resultsDoc.Load(Constants.resultsDownload + date);
+            var meetingsRootNode = resultsDoc.SelectSingleNode("//meetings");
+            if (meetingsRootNode == null) return null;
+            XMLMeetingsRootFromResults xmlMeetings = null;
+            using (var reader = new StringReader(meetingsRootNode.OuterXml))
             {
-                var serializer = new XmlSerializer(typeof (MeetingsRoot));
-                schedule = (MeetingsRoot) serializer.Deserialize(reader);
+                var serializer = new XmlSerializer(typeof(XMLMeetingsRootFromResults));
+                xmlMeetings = (XMLMeetingsRootFromResults)serializer.Deserialize(reader);
             }
-            foreach (var meet in schedule.Meetings)
-            {
-/*                meet.Id = Guid.NewGuid();#1#
-                meetings.Add(meet);
-                var course = uow.RaceCourses.SingleOrDefault(r => r.CourseName == meet.Venue);
-                if (course == null)
-                {
-                    course = new RaceCourse() {CourseName = meet.Venue};
-                    if (course.CourseName.Length > 19)
-                    {
-                        course.CourseName = course.CourseName.Substring(0, 19);
-                    }
-                    uow.Add(course);
-                    meet.CourseId = course.Id;
-                }
-                else
-                {
-                    meet.CourseId = course.Id;
-                }
-                uow.Add(meet); 
-                
-            }
-            uow.SaveChanges();
-            
-        }*/              
+            return xmlMeetings;
+
+        }
+
+        
     }
 }

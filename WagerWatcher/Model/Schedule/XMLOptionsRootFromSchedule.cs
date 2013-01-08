@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 
-namespace WagerWatcher.Model
+namespace WagerWatcher.Model.Schedule
 {
     [Serializable, XmlRoot("options")]
-    public class OptionsRootFromXML
+    public class XMLOptionsRootFromSchedule
     {
         [XmlElement("option")]
-        public List<OptionFromXML> Options { get; set; }
+        public List<XMLOptionFromSchedule> Options { get; set; }
     }
 }

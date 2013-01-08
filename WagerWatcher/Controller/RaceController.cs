@@ -4,35 +4,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WagerWatcher.Model;
+using WagerWatcher.Model.Schedule;
 
 namespace WagerWatcher.Controller
 {
     public class RaceController
     {
-        public static Race BuildRaceForDB(RaceFromXML xmlRace, Meeting meeting = null)
+        public static Race BuildRaceForDB(XMLRaceFromSchedule scheduleXMLRace, Meeting meeting = null)
         {
             IList<FixedOption> options = 
-                xmlRace.OptionsRoot.Options.Select(OptionController.BuildOptionForDB).ToList();
+                scheduleXMLRace.OptionsRoot.Options.Select(OptionController.BuildOptionForDB).ToList();
             IList<HorseInRace> entries = 
-                xmlRace.Entries.Entries.Select(EntryController.BuildEntryForDB).ToList();
+                scheduleXMLRace.Entries.Entries.Select(EntryController.BuildEntryForDB).ToList();
             var race = new Race()
                 {
-                    Class = ClassController.GetClass(xmlRace.Class),
-                    Distance = int.Parse(xmlRace.Length),
-                    NormTime = xmlRace.NormalTime,
-                    OverseasNumber = xmlRace.OverseasNumber,
-                    RaceName = xmlRace.Name,
-                    RaceNum = int.Parse(xmlRace.Number),
-                    RaceStatus = xmlRace.Status,
-                    Stake = xmlRace.Stake,
-                    TrackCondition = xmlRace.Track,
-                    Venue = xmlRace.Venue,
-                    Weather = xmlRace.Weather,
+                    Class = ClassController.GetClass(scheduleXMLRace.Class),
+                    Distance = int.Parse(scheduleXMLRace.Length),
+                    NormTime = scheduleXMLRace.NormalTime,
+                    OverseasNumber = scheduleXMLRace.OverseasNumber,
+                    RaceName = scheduleXMLRace.Name,
+                    RaceNum = int.Parse(scheduleXMLRace.Number),
+                    RaceStatus = scheduleXMLRace.Status,
+                    Stake = scheduleXMLRace.Stake,
+                    TrackCondition = scheduleXMLRace.Track,
+                    Venue = scheduleXMLRace.Venue,
+                    Weather = scheduleXMLRace.Weather,
                     Meeting = meeting,
                     FixedOptions = options,
                     HorseInRaces = entries
                 };
             return race;
         }
+
+
     }
 }

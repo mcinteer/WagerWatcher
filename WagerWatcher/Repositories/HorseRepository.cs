@@ -2,6 +2,7 @@ using System;
 using NHibernate.Criterion;
 using WagerWatcher.Controller;
 using WagerWatcher.Model;
+using WagerWatcher.Model.Schedule;
 
 
 namespace WagerWatcher.Repositories
@@ -46,7 +47,7 @@ namespace WagerWatcher.Repositories
             }
         }        
 
-        public static Horse GetByName(EntryFromXML entry)
+        public static Horse GetByName(XMLEntryFromSchedule entry)
         {
             Horse horse;
             using (var session = NHibernateHelper.OpenSession())

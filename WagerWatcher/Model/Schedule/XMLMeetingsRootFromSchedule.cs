@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using Mindscape.LightSpeed;
+using WagerWatcher.Model.Schedule;
 
 namespace WagerWatcher.Model
 {
     [XmlRoot("meetings")]
-    public class MeetingsRootFromXML
+    public class XMLMeetingsRootFromSchedule
     {
         [XmlElement("meeting")]
-        public List<MeetingFromXML> Meetings { get; set; }
+        public List<XMLMeetingFromSchedule> Meetings { get; set; }
     }
 }

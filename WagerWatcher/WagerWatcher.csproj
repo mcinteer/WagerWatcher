@@ -81,7 +81,21 @@
     <Compile Include="Controller\HorseController.cs" />
     <Compile Include="Controller\MeetingController.cs" />
     <Compile Include="Controller\MeetingsRootController.cs" />
+    <Compile Include="Model\Results\XMLAlsoRanRootFromResults.cs" />
+    <Compile Include="Model\Results\XMLMeetingFromResults.cs" />
+    <Compile Include="Model\Results\XMLMeetingsRootFromResults.cs" />
+    <Compile Include="Model\Results\XMLPlacingFromResults.cs" />
+    <Compile Include="Model\Results\XMLPlacingsRootFromResults.cs" />
+    <Compile Include="Model\Results\XMLPoolFromResults.cs" />
+    <Compile Include="Model\Results\XMLPoolsRootFromResults.cs" />
+    <Compile Include="Model\Results\XMLRaceFromResults.cs" />
+    <Compile Include="Model\Results\XMLRunnerFromResults.cs" />
+    <Compile Include="Model\Results\XMLRunnersRootFromResults.cs" />
+    <Compile Include="Model\Results\XMLScratchingFromResults.cs" />
+    <Compile Include="Model\Results\XMLScratchingsRootFromResults.cs" />
+    <Compile Include="Repositories\BetTypeRepository.cs" />
     <Compile Include="Repositories\ClassRepository.cs" />
+    <Compile Include="Repositories\EntrantInResultRepository.cs" />
     <Compile Include="Repositories\HorseRepository.cs" />
     <Compile Include="Repositories\MeetingRepository.cs" />
     <Compile Include="Repositories\NHibernateHelper.cs" />
@@ -90,15 +104,15 @@
     <Compile Include="Controller\RaceCourseController.cs" />
     <Compile Include="Controller\ScheduleController.cs" />
     <Compile Include="Controller\XMLHelper.cs" />
-    <Compile Include="Model\EntriesRootFromXML.cs" />
-    <Compile Include="Model\EntryFromXML.cs" />
-    <Compile Include="Model\MeetingFromXML.cs" />
-    <Compile Include="Model\OptionFromXML.cs" />
-    <Compile Include="Model\OptionsRootFromXML.cs" />
-    <Compile Include="Model\RaceFromXML.cs" />
-    <Compile Include="Model\RacesRootFromXML.cs" />
-    <Compile Include="Model\MeetingsRootFromXML.cs" />
-    <Compile Include="Model\ScheduleFromXML.cs" />
+    <Compile Include="Model\Schedule\XMLEntriesRootFromSchedule.cs" />
+    <Compile Include="Model\Schedule\XMLEntryFromSchedule.cs" />
+    <Compile Include="Model\Schedule\XMLMeetingFromSchedule.cs" />
+    <Compile Include="Model\Schedule\XMLOptionFromSchedule.cs" />
+    <Compile Include="Model\Schedule\XMLOptionsRootFromSchedule.cs" />
+    <Compile Include="Model\Schedule\XMLRaceFromSchedule.cs" />
+    <Compile Include="Model\Schedule\XMLRacesRootFromSchedule.cs" />
+    <Compile Include="Model\Schedule\XMLMeetingsRootFromSchedule.cs" />
+    <Compile Include="Model\Schedule\XMLScheduleFromSchedule.cs" />
     <Compile Include="NHibernateModel2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -107,7 +121,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\OptionRepository.cs" />
+    <Compile Include="Repositories\RaceBetTypeRepository.cs" />
     <Compile Include="Repositories\RaceRepository.cs" />
+    <Compile Include="Repositories\ResultRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

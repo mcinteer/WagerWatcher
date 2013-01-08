@@ -1,20 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <model xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" connectionString="Data Source=localhost;Initial Catalog=WagerWatcher;Integrated Security=True;Pooling=False" name="" defaultIdentityGenerator="Guid" cascadeSaves="true" xmlns="http://namespaces.mindscape.co.nz/nhmodel">
   <entities>
-    <entity name="Bet" tableName="Bet">
-      <entityProperties>
-        <entityProperty name="BetTypeId" columnName="BetTypeID" isNullable="true" dataType="Guid" />
-        <entityProperty name="RaceId" columnName="RaceID" isNullable="true" dataType="Guid" />
-      </entityProperties>
-      <identityProperties>
-        <identityProperty name="BetId" columnName="BetID" dataType="Guid" />
-      </identityProperties>
-      <oneToManyAssociations>
-        <oneToManyAssociation Id="b605e981-b77e-4534-b172-53804ad8f1f8" collectionName="BetLines" keyColumnName="BetID" backreferenceName="Bet">
-          <entityMoniker name="//BetLine" />
-        </oneToManyAssociation>
-      </oneToManyAssociations>
-    </entity>
     <entity name="RaceCourse" tableName="RaceCourse">
       <entityProperties>
         <entityProperty name="CourseName" columnName="CourseName">
@@ -38,16 +24,6 @@
         </oneToManyAssociation>
       </oneToManyAssociations>
     </entity>
-    <entity name="BetLine" tableName="BetLines">
-      <entityProperties>
-        <entityProperty name="Position" columnName="Position" dataType="Int32" />
-        <entityProperty name="HorseInBetId" columnName="HorseInBetID" isNullable="true" dataType="Guid" />
-        <entityProperty name="BetId" columnName="BetID" isNullable="true" dataType="Guid" />
-      </entityProperties>
-      <identityProperties>
-        <identityProperty name="BetLineId" columnName="BetLineID" dataType="Guid" />
-      </identityProperties>
-    </entity>
     <entity name="BetType" tableName="BetType">
       <entityProperties>
         <entityProperty name="BetTypeDesc" size="20" columnName="BetTypeDesc" isNullable="true">
@@ -60,8 +36,8 @@
         <identityProperty name="BetTypeId" columnName="BetTypeID" dataType="Guid" />
       </identityProperties>
       <oneToManyAssociations>
-        <oneToManyAssociation Id="f33e4b94-9ae9-40ed-b4db-a6e1b8e07e8d" collectionName="Bets" keyColumnName="BetTypeID" backreferenceName="BetType">
-          <entityMoniker name="//Bet" />
+        <oneToManyAssociation Id="4b7c3d49-796a-43a4-b018-5995d9d36a1c" collectionName="RaceBetTypesByBetType" keyColumnName="BetTypeID" backreferenceName="BetType">
+          <entityMoniker name="//RaceBetType" />
         </oneToManyAssociation>
       </oneToManyAssociations>
     </entity>
@@ -114,18 +90,8 @@
         <oneToManyAssociation Id="b7d0b84f-2bb1-4bee-8996-0010dfbf5979" collectionName="HorseInRaces" keyColumnName="HorseID" backreferenceName="Horse" cascadeSaves="All">
           <entityMoniker name="//HorseInRace" />
         </oneToManyAssociation>
-      </oneToManyAssociations>
-    </entity>
-    <entity name="HorseInBet" tableName="HorseInBet">
-      <entityProperties>
-        <entityProperty name="EntryId" columnName="EntryID" isNullable="true" dataType="Guid" />
-      </entityProperties>
-      <identityProperties>
-        <identityProperty name="HorseBetId" columnName="HorseBetID" dataType="Guid" />
-      </identityProperties>
-      <oneToManyAssociations>
-        <oneToManyAssociation Id="68e09db1-f4e7-468f-9a89-d5d1ececc883" collectionName="BetLines" keyColumnName="HorseInBetID" backreferenceName="HorseInBet">
-          <entityMoniker name="//BetLine" />
+        <oneToManyAssociation Id="997ec5d4-8cd0-48a2-8554-3ab64e63a0cb" collectionName="EntrantInResults" keyColumnName="HorseID" backreferenceName="Horse">
+          <entityMoniker name="//EntrantInResult" />
         </oneToManyAssociation>
       </oneToManyAssociations>
     </entity>
@@ -160,11 +126,6 @@
       <identityProperties>
         <identityProperty name="EntryId" columnName="EntryID" dataType="Guid" />
       </identityProperties>
-      <oneToManyAssociations>
-        <oneToManyAssociation Id="d7be2f55-a1ca-4cff-ba11-384447240883" collectionName="HorseInBets" keyColumnName="EntryID" backreferenceName="Entry">
-          <entityMoniker name="//HorseInBet" />
-        </oneToManyAssociation>
-      </oneToManyAssociations>
     </entity>
     <entity name="Meeting" tableName="Meeting">
       <entityProperties>
@@ -283,14 +244,63 @@
         <identityProperty name="RaceId" columnName="RaceID" dataType="Guid" />
       </identityProperties>
       <oneToManyAssociations>
-        <oneToManyAssociation Id="afe515ab-6202-4c5d-bd78-ba7416207ec8" collectionName="Bets" keyColumnName="RaceID" backreferenceName="Race">
-          <entityMoniker name="//Bet" />
-        </oneToManyAssociation>
         <oneToManyAssociation Id="e75d3327-8c07-4009-8dfd-031f1a2b1848" collectionName="FixedOptions" keyColumnName="RaceID" backreferenceName="Race" cascadeSaves="All">
           <entityMoniker name="//FixedOption" />
         </oneToManyAssociation>
         <oneToManyAssociation Id="b30cfaf5-2672-4fe6-9d8c-a49b1492d64b" collectionName="HorseInRaces" keyColumnName="RaceID" backreferenceName="Race" cascadeSaves="All">
           <entityMoniker name="//HorseInRace" />
+        </oneToManyAssociation>
+        <oneToManyAssociation Id="9d88eed6-f07e-46b1-b388-0a8fffc85d4c" collectionName="RaceBetTypesByRace" keyColumnName="RaceID" backreferenceName="Race">
+          <entityMoniker name="//RaceBetType" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Dividend" tableName="Dividend">
+      <entityProperties>
+        <entityProperty name="ResultId" columnName="ResultID" isNullable="true" dataType="Guid" />
+        <entityProperty name="AmountPaid" columnName="AmountPaid" isNullable="true" dataType="Int32" />
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="DividendId" columnName="DividendID" dataType="Guid" />
+      </identityProperties>
+    </entity>
+    <entity name="EntrantInResult" tableName="EntrantInResult">
+      <entityProperties>
+        <entityProperty name="ResultId" columnName="ResultID" isNullable="true" dataType="Guid" />
+        <entityProperty name="HorseId" columnName="HorseID" isNullable="true" dataType="Guid" />
+        <entityProperty name="Position" columnName="Position" isNullable="true" dataType="Int32" />
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="EntrantInResultId" columnName="EntrantInResultID" dataType="Guid" />
+      </identityProperties>
+    </entity>
+    <entity name="RaceBetType" tableName="RaceBetType">
+      <entityProperties>
+        <entityProperty name="BetTypeId" columnName="BetTypeID" isNullable="true" dataType="Guid" />
+        <entityProperty name="RaceId" columnName="RaceID" isNullable="true" dataType="Guid" />
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="RaceBetTypeId" columnName="RaceBetTypeID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="f2eac901-7ba4-4192-b790-73d111913a14" collectionName="Results" keyColumnName="RaceBetTypeID" backreferenceName="RaceBetType">
+          <entityMoniker name="//Result" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
+    </entity>
+    <entity name="Result" tableName="Result">
+      <entityProperties>
+        <entityProperty name="RaceBetTypeId" columnName="RaceBetTypeID" isNullable="true" dataType="Guid" />
+      </entityProperties>
+      <identityProperties>
+        <identityProperty name="ResultId" columnName="ResultID" dataType="Guid" />
+      </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="a486e7b3-7f99-4aab-b46f-53d4c1a242e6" collectionName="Dividends" keyColumnName="ResultId" backreferenceName="Result">
+          <entityMoniker name="//Dividend" />
+        </oneToManyAssociation>
+        <oneToManyAssociation Id="d4a46f7e-c5b4-43d7-a2a3-d451298f54cd" collectionName="EntrantInResults" keyColumnName="ResultId" backreferenceName="Result">
+          <entityMoniker name="//EntrantInResult" />
         </oneToManyAssociation>
       </oneToManyAssociations>
     </entity>

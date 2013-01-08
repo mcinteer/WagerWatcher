@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace WagerWatcher.Model
+namespace WagerWatcher.Model.Schedule
 {
     [Serializable, XmlRoot("entry")]
-    public class EntryFromXML
+    public class XMLEntryFromSchedule
     {
         [XmlElement("barrier")]
         public string Barrier { get; set; }
