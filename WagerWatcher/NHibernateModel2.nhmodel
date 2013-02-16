@@ -31,13 +31,18 @@
             <lengthValidation minimumLength="0" maximumLength="20" />
           </validations>
         </entityProperty>
+        <entityProperty name="XmlDesc" size="20" columnName="XmlDesc" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
       </entityProperties>
       <identityProperties>
         <identityProperty name="BetTypeId" columnName="BetTypeID" dataType="Guid" />
       </identityProperties>
       <oneToManyAssociations>
-        <oneToManyAssociation Id="4b7c3d49-796a-43a4-b018-5995d9d36a1c" collectionName="RaceBetTypesByBetType" keyColumnName="BetTypeID" backreferenceName="BetType">
-          <entityMoniker name="//RaceBetType" />
+        <oneToManyAssociation Id="8eb998e7-deb7-4193-8673-e51ec385cca0" collectionName="PoolsByBetType" keyColumnName="BetTypeID" backreferenceName="BetType">
+          <entityMoniker name="//Pool" />
         </oneToManyAssociation>
       </oneToManyAssociations>
     </entity>
@@ -250,23 +255,13 @@
         <oneToManyAssociation Id="b30cfaf5-2672-4fe6-9d8c-a49b1492d64b" collectionName="HorseInRaces" keyColumnName="RaceID" backreferenceName="Race" cascadeSaves="All">
           <entityMoniker name="//HorseInRace" />
         </oneToManyAssociation>
-        <oneToManyAssociation Id="9d88eed6-f07e-46b1-b388-0a8fffc85d4c" collectionName="RaceBetTypesByRace" keyColumnName="RaceID" backreferenceName="Race">
-          <entityMoniker name="//RaceBetType" />
+        <oneToManyAssociation Id="9d857274-7cda-4d87-bced-4d4b0eb68c14" collectionName="PoolsByRace" keyColumnName="RaceID" backreferenceName="Race">
+          <entityMoniker name="//Pool" />
         </oneToManyAssociation>
       </oneToManyAssociations>
     </entity>
-    <entity name="Dividend" tableName="Dividend">
-      <entityProperties>
-        <entityProperty name="ResultId" columnName="ResultID" isNullable="true" dataType="Guid" />
-        <entityProperty name="AmountPaid" columnName="AmountPaid" isNullable="true" dataType="Int32" />
-      </entityProperties>
-      <identityProperties>
-        <identityProperty name="DividendId" columnName="DividendID" dataType="Guid" />
-      </identityProperties>
-    </entity>
     <entity name="EntrantInResult" tableName="EntrantInResult">
       <entityProperties>
-        <entityProperty name="ResultId" columnName="ResultID" isNullable="true" dataType="Guid" />
         <entityProperty name="HorseId" columnName="HorseID" isNullable="true" dataType="Guid" />
         <entityProperty name="Position" columnName="Position" isNullable="true" dataType="Int32" />
       </entityProperties>
@@ -274,52 +269,61 @@
         <identityProperty name="EntrantInResultId" columnName="EntrantInResultID" dataType="Guid" />
       </identityProperties>
     </entity>
-    <entity name="RaceBetType" tableName="RaceBetType">
-      <entityProperties>
-        <entityProperty name="BetTypeId" columnName="BetTypeID" isNullable="true" dataType="Guid" />
-        <entityProperty name="RaceId" columnName="RaceID" isNullable="true" dataType="Guid" />
-      </entityProperties>
-      <identityProperties>
-        <identityProperty name="RaceBetTypeId" columnName="RaceBetTypeID" dataType="Guid" />
-      </identityProperties>
-      <oneToManyAssociations>
-        <oneToManyAssociation Id="f2eac901-7ba4-4192-b790-73d111913a14" collectionName="Results" keyColumnName="RaceBetTypeID" backreferenceName="RaceBetType">
-          <entityMoniker name="//Result" />
-        </oneToManyAssociation>
-      </oneToManyAssociations>
-    </entity>
     <entity name="Result" tableName="Result">
       <entityProperties>
-        <entityProperty name="RaceBetTypeId" columnName="RaceBetTypeID" isNullable="true" dataType="Guid" />
+        <entityProperty name="AmountPaid" size="30" columnName="AmountPaid" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="30" />
+          </validations>
+        </entityProperty>
       </entityProperties>
       <identityProperties>
         <identityProperty name="ResultId" columnName="ResultID" dataType="Guid" />
       </identityProperties>
       <oneToManyAssociations>
-        <oneToManyAssociation Id="a486e7b3-7f99-4aab-b46f-53d4c1a242e6" collectionName="Dividends" keyColumnName="ResultId" backreferenceName="Result">
-          <entityMoniker name="//Dividend" />
-        </oneToManyAssociation>
         <oneToManyAssociation Id="d4a46f7e-c5b4-43d7-a2a3-d451298f54cd" collectionName="EntrantInResults" keyColumnName="ResultId" backreferenceName="Result">
           <entityMoniker name="//EntrantInResult" />
         </oneToManyAssociation>
       </oneToManyAssociations>
     </entity>
-    <entity name="RaceResult" accessMethod="View">
+    <entity name="Pool" tableName="Pool">
       <entityProperties>
-        <entityProperty name="MeetingId" columnName="MeetingID" dataType="Guid" />
-        <entityProperty name="JetBetCode" columnName="JetBetCode" dataType="Int32" />
-        <entityProperty name="MDate" size="50" columnName="MDate">
+        <entityProperty name="BetTypeId" columnName="BetTypeID" isNullable="true" dataType="Guid" />
+        <entityProperty name="RaceId" columnName="RaceID" isNullable="true" dataType="Guid" />
+        <entityProperty name="Total" size="20" columnName="Total" isNullable="true">
           <validations>
-            <notNullValidation />
-            <lengthValidation minimumLength="0" maximumLength="50" />
+            <lengthValidation minimumLength="0" maximumLength="20" />
           </validations>
         </entityProperty>
-        <entityProperty name="RaceId" columnName="RaceID" dataType="Guid" />
-        <entityProperty name="Racenum" columnName="racenum" dataType="Int32" />
+        <entityProperty name="Gaurantee" size="20" columnName="Gaurantee" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="BroughtForward" size="20" columnName="BroughtForward" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="Commingled" size="5" columnName="Commingled" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="5" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="CommingledInfo" size="20" columnName="CommingledInfo" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
       </entityProperties>
       <identityProperties>
-        <identityProperty name="RaceResultID" />
+        <identityProperty name="PoolId" columnName="PoolID" dataType="Guid" />
       </identityProperties>
+      <oneToManyAssociations>
+        <oneToManyAssociation Id="210b7f2b-fe13-45d8-a5b5-6d1e39445e5c" collectionName="Results" keyColumnName="PoolId" backreferenceName="Pool">
+          <entityMoniker name="//Result" />
+        </oneToManyAssociation>
+      </oneToManyAssociations>
     </entity>
   </entities>
 </model>

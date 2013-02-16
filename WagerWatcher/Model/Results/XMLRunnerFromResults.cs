@@ -9,19 +9,19 @@ namespace WagerWatcher.Model.Results
     [Serializable, XmlRoot("runner")]
     public class XMLRunnerFromResults
     {
-        [XmlElement("number")]
+        [XmlAttribute("number")]
         public string EntryNumber { get; set; }
 
-        [XmlElement("name")]
+        [XmlAttribute("name")]
         public string EntryName { get; set; }
 
-        [XmlElement("jockey")]
+        [XmlAttribute("jockey")]
         public string Jockey { get; set; }
 
-        [XmlElement("distance")]
+        [XmlAttribute("distance")]
         public string Distance { get; set; }
 
-        [XmlElement("finish_position")]
+        [XmlAttribute("finish_position")]
         public string FinishingPosition { get; set; }
 
 

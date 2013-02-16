@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate.Criterion;
+using WagerWatcher.Controller;
 
 namespace WagerWatcher.Repositories
 {
-    public class RaceBetTypeRepository
+    public class PoolRepository
     {
-        public void Add(RaceBetType raceBetType)
+        public void Add(Pool raceBetType)
         {
             using (var session = NHibernateHelper.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -17,7 +19,7 @@ namespace WagerWatcher.Repositories
             }
         }
 
-        public void Update(RaceBetType raceBetType)
+        public void Update(Pool raceBetType)
         {
             using (var session = NHibernateHelper.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -27,7 +29,7 @@ namespace WagerWatcher.Repositories
             }
         }
 
-        public void Remove(RaceBetType raceBetType)
+        public void Remove(Pool raceBetType)
         {
             using (var session = NHibernateHelper.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -37,12 +39,27 @@ namespace WagerWatcher.Repositories
             }
         }
 
-        public RaceBetType GetByID(Guid id)
+        public Pool GetByID(Guid id)
         {
             using (var session = NHibernateHelper.OpenSession())
             {
-                return session.Get<RaceBetType>(id);
+                return session.Get<Pool>(id);
             }
+        }
+
+        public static Pool GetByBetTypeAndRace(Guid betTypeID, Guid raceID)
+        {
+            // make sure when its populating the DB, that one isnt already there
+            Pool pool;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                pool = session
+                    .CreateCriteria(typeof (Pool))
+                    .Add(Restrictions.Eq("BetTypeId", betTypeID))
+                    .Add(Restrictions.Eq("RaceId", raceID))
+                    .UniqueResult<Pool>();
+            }
+            return pool;
         }
     }
 }

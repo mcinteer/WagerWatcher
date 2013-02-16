@@ -10,7 +10,7 @@ namespace WagerWatcher.Model.Results
     public class XMLMeetingFromResults
     {
         [XmlElement("races")]
-        public List<XMLRaceFromResults> Races { get; set; }
+        public XMLRacesRootFromResults RacesRoot { get; set; }
 
         [XmlAttribute("number")]
         public string JetBetCode { get; set; }

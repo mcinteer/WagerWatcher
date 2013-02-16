@@ -59,5 +59,17 @@ namespace WagerWatcher.Repositories
             }
             return horse ?? (HorseController.BuildHorseForDB(entry));
         }
+        public static Horse GetByName(string name)
+        {
+            Horse horse;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                horse = session
+                    .CreateCriteria(typeof(Horse))
+                    .Add(Restrictions.Eq("HorseName", name))
+                    .UniqueResult<Horse>();
+            }
+            return horse;
+        }
     }
 }

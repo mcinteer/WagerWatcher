@@ -147,4 +147,7 @@
   <data name="willPayDownload" xml:space="preserve">
     <value>http://xml.tab.co.nz/will-pay/</value>
   </data>
+  <data name="ResultsController_GetFinishingPositions_result_was_from_a_combination_of_races__IE__a_double_" xml:space="preserve">
+    <value>result was from a combination of races, IE. a double.</value>
+  </data>
 </root>

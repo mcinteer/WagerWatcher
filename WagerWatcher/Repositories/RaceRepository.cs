@@ -49,12 +49,17 @@ namespace WagerWatcher.Repositories
             }
         }
 
-        public static Race GetRaceByDateAndJetBetCodeAndRaceNumber(string date, int jetBetCode, int raceNumber)
+        public static IList<Race> GetRacesInMeeting(Meeting meeting)
         {
-            var raceResult = RaceResultRepository.GetRaceByDateAndJetBetCodeAndRaceNumber(date,
-                                                                                          jetBetCode,
-                                                                                          raceNumber);
-            return GetByID(raceResult.RaceId);            
+            IList<Race> races;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                races = session
+                    .CreateCriteria(typeof (Race))
+                    .Add(Restrictions.Eq("MeetingId", meeting.MeetingId))
+                    .List<Race>();
+            }
+            return races;
         }
     }
 }

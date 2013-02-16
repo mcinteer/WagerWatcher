@@ -38,6 +38,10 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\Lib\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Mindscape.LightSpeed">
       <HintPath>C:\Program Files (x86)\Mindscape\LightSpeed\Bin\Mindscape.LightSpeed.dll</HintPath>
     </Reference>
@@ -64,6 +68,26 @@
     <Reference Include="System.Data.SQLite.Linq">
       <HintPath>..\packages\System.Data.SQLite.1.0.82.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -77,10 +101,20 @@
       <DependentUpon>Constants.resx</DependentUpon>
     </Compile>
     <Compile Include="Controller\ClassController.cs" />
+    <Compile Include="Controller\EntrantInResultController.cs" />
     <Compile Include="Controller\EntryController.cs" />
     <Compile Include="Controller\HorseController.cs" />
     <Compile Include="Controller\MeetingController.cs" />
     <Compile Include="Controller\MeetingsRootController.cs" />
+    <Compile Include="Controller\PoolController.cs" />
+    <Compile Include="Controller\ResultsController.cs" />
+    <Compile Include="Model\Pool\XMLEntriesRootFromPool.cs" />
+    <Compile Include="Model\Pool\XMLEntryFromPool.cs" />
+    <Compile Include="Model\Pool\XMLMeetingFromPool.cs" />
+    <Compile Include="Model\Pool\XMLMeetingsRootFromPool.cs" />
+    <Compile Include="Model\Pool\XMLPoolFromPool.cs" />
+    <Compile Include="Model\Pool\XMLPoolsRootFromPool.cs" />
+    <Compile Include="Model\Pool\XMLRaceFromPool.cs" />
     <Compile Include="Model\Results\XMLAlsoRanRootFromResults.cs" />
     <Compile Include="Model\Results\XMLMeetingFromResults.cs" />
     <Compile Include="Model\Results\XMLMeetingsRootFromResults.cs" />
@@ -89,10 +123,12 @@
     <Compile Include="Model\Results\XMLPoolFromResults.cs" />
     <Compile Include="Model\Results\XMLPoolsRootFromResults.cs" />
     <Compile Include="Model\Results\XMLRaceFromResults.cs" />
+    <Compile Include="Model\Results\XMLRacesRootFromResults.cs" />
     <Compile Include="Model\Results\XMLRunnerFromResults.cs" />
     <Compile Include="Model\Results\XMLRunnersRootFromResults.cs" />
     <Compile Include="Model\Results\XMLScratchingFromResults.cs" />
     <Compile Include="Model\Results\XMLScratchingsRootFromResults.cs" />
+    <Compile Include="Model\Pool\XMLRacesRootFromPool.cs" />
     <Compile Include="Repositories\BetTypeRepository.cs" />
     <Compile Include="Repositories\ClassRepository.cs" />
     <Compile Include="Repositories\EntrantInResultRepository.cs" />
@@ -121,9 +157,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\OptionRepository.cs" />
-    <Compile Include="Repositories\RaceBetTypeRepository.cs" />
+    <Compile Include="Repositories\PoolRepository.cs" />
     <Compile Include="Repositories\RaceRepository.cs" />
-    <Compile Include="Repositories\RaceResultRepository.cs" />
     <Compile Include="Repositories\ResultRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -140,12 +175,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Model\Services\" />
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Constants.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Constants.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

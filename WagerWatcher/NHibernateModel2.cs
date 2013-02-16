@@ -74,13 +74,15 @@ namespace WagerWatcher
     public virtual System.Guid BetTypeId { get; set; }
     [Length(Max=20)]
     public virtual string BetTypeDesc { get; set; }
+    [Length(Max=20)]
+    public virtual string XmlDesc { get; set; }
 
-    private IList<RaceBetType> _raceBetTypesByBetType = new List<RaceBetType>();
+    private IList<Pool> _poolsByBetType = new List<Pool>();
 
-    public virtual IList<RaceBetType> RaceBetTypesByBetType
+    public virtual IList<Pool> PoolsByBetType
     {
-      get { return _raceBetTypesByBetType; }
-      set { _raceBetTypesByBetType = value; }
+      get { return _poolsByBetType; }
+      set { _poolsByBetType = value; }
     }
 
     static partial void CustomizeMappingDocument(System.Xml.Linq.XDocument mappingDocument);
@@ -107,11 +109,14 @@ namespace WagerWatcher
     <property name='BetTypeDesc'
               column='`BetTypeDesc`'
               />
-    <bag name='RaceBetTypesByBetType'
+    <property name='XmlDesc'
+              column='`XmlDesc`'
+              />
+    <bag name='PoolsByBetType'
           inverse='false'
           >
       <key column='`BetTypeID`' />
-      <one-to-many class='RaceBetType' />
+      <one-to-many class='Pool' />
     </bag>
   </class>
 </hibernate-mapping>");
@@ -540,12 +545,12 @@ namespace WagerWatcher
       set { _horseInRaces = value; }
     }
 
-    private IList<RaceBetType> _raceBetTypesByRace = new List<RaceBetType>();
+    private IList<Pool> _poolsByRace = new List<Pool>();
 
-    public virtual IList<RaceBetType> RaceBetTypesByRace
+    public virtual IList<Pool> PoolsByRace
     {
-      get { return _raceBetTypesByRace; }
-      set { _raceBetTypesByRace = value; }
+      get { return _poolsByRace; }
+      set { _poolsByRace = value; }
     }
 
     public virtual Class Class { get; set; }
@@ -627,11 +632,11 @@ namespace WagerWatcher
       <key column='`RaceID`' />
       <one-to-many class='HorseInRace' />
     </bag>
-    <bag name='RaceBetTypesByRace'
+    <bag name='PoolsByRace'
           inverse='false'
           >
       <key column='`RaceID`' />
-      <one-to-many class='RaceBetType' />
+      <one-to-many class='Pool' />
     </bag>
     <many-to-one name='Class' class='Class' column='`ClassID`' />
     <many-to-one name='Meeting' class='Meeting' column='`MeetingID`' />
@@ -644,55 +649,9 @@ namespace WagerWatcher
   }
 
   [System.CodeDom.Compiler.GeneratedCode("NHibernateModelGenerator", "1.0.0.0")]
-  public partial class Dividend
-  {
-    public virtual System.Guid DividendId { get; set; }
-    public virtual System.Nullable<System.Guid> ResultId { get; set; }
-    public virtual System.Nullable<int> AmountPaid { get; set; }
-
-    public virtual Result Result { get; set; }
-
-    static partial void CustomizeMappingDocument(System.Xml.Linq.XDocument mappingDocument);
-
-    internal static System.Xml.Linq.XDocument MappingXml
-    {
-      get
-      {
-        var mappingDocument = System.Xml.Linq.XDocument.Parse(@"<?xml version='1.0' encoding='utf-8' ?>
-<hibernate-mapping xmlns='urn:nhibernate-mapping-2.2'
-                   assembly='" + typeof(Dividend).Assembly.GetName().Name + @"'
-                   namespace='WagerWatcher'
-                   default-cascade='save-update'
-                   >
-  <class name='Dividend'
-         table='`Dividend`'
-         >
-    <id name='DividendId'
-        column='`DividendID`'
-        >
-      <generator class='guid'>
-      </generator>
-    </id>
-    <property name='ResultId'
-              column='`ResultID`'
-              />
-    <property name='AmountPaid'
-              column='`AmountPaid`'
-              />
-    <many-to-one name='Result' class='Result' column='`ResultId`' />
-  </class>
-</hibernate-mapping>");
-        CustomizeMappingDocument(mappingDocument);
-        return mappingDocument;
-      }
-    }
-  }
-
-  [System.CodeDom.Compiler.GeneratedCode("NHibernateModelGenerator", "1.0.0.0")]
   public partial class EntrantInResult
   {
     public virtual System.Guid EntrantInResultId { get; set; }
-    public virtual System.Nullable<System.Guid> ResultId { get; set; }
     public virtual System.Nullable<System.Guid> HorseId { get; set; }
     public virtual System.Nullable<int> Position { get; set; }
 
@@ -721,9 +680,6 @@ namespace WagerWatcher
       <generator class='guid'>
       </generator>
     </id>
-    <property name='ResultId'
-              column='`ResultID`'
-              />
     <property name='HorseId'
               column='`HorseID`'
               insert='false'
@@ -743,84 +699,11 @@ namespace WagerWatcher
   }
 
   [System.CodeDom.Compiler.GeneratedCode("NHibernateModelGenerator", "1.0.0.0")]
-  public partial class RaceBetType
-  {
-    public virtual System.Guid RaceBetTypeId { get; set; }
-    public virtual System.Nullable<System.Guid> BetTypeId { get; set; }
-    public virtual System.Nullable<System.Guid> RaceId { get; set; }
-
-    private IList<Result> _results = new List<Result>();
-
-    public virtual IList<Result> Results
-    {
-      get { return _results; }
-      set { _results = value; }
-    }
-
-    public virtual BetType BetType { get; set; }
-
-    public virtual Race Race { get; set; }
-
-    static partial void CustomizeMappingDocument(System.Xml.Linq.XDocument mappingDocument);
-
-    internal static System.Xml.Linq.XDocument MappingXml
-    {
-      get
-      {
-        var mappingDocument = System.Xml.Linq.XDocument.Parse(@"<?xml version='1.0' encoding='utf-8' ?>
-<hibernate-mapping xmlns='urn:nhibernate-mapping-2.2'
-                   assembly='" + typeof(RaceBetType).Assembly.GetName().Name + @"'
-                   namespace='WagerWatcher'
-                   default-cascade='save-update'
-                   >
-  <class name='RaceBetType'
-         table='`RaceBetType`'
-         >
-    <id name='RaceBetTypeId'
-        column='`RaceBetTypeID`'
-        >
-      <generator class='guid'>
-      </generator>
-    </id>
-    <property name='BetTypeId'
-              column='`BetTypeID`'
-              insert='false'
-              update='false'
-              />
-    <property name='RaceId'
-              column='`RaceID`'
-              insert='false'
-              update='false'
-              />
-    <bag name='Results'
-          inverse='false'
-          >
-      <key column='`RaceBetTypeID`' />
-      <one-to-many class='Result' />
-    </bag>
-    <many-to-one name='BetType' class='BetType' column='`BetTypeID`' />
-    <many-to-one name='Race' class='Race' column='`RaceID`' />
-  </class>
-</hibernate-mapping>");
-        CustomizeMappingDocument(mappingDocument);
-        return mappingDocument;
-      }
-    }
-  }
-
-  [System.CodeDom.Compiler.GeneratedCode("NHibernateModelGenerator", "1.0.0.0")]
   public partial class Result
   {
     public virtual System.Guid ResultId { get; set; }
-    public virtual System.Nullable<System.Guid> RaceBetTypeId { get; set; }
-
-    private IList<Dividend> _dividends = new List<Dividend>();
-
-    public virtual IList<Dividend> Dividends
-    {
-      get { return _dividends; }
-      set { _dividends = value; }
-    }
+    [Length(Max=30)]
+    public virtual string AmountPaid { get; set; }
 
     private IList<EntrantInResult> _entrantInResults = new List<EntrantInResult>();
 
@@ -830,7 +713,7 @@ namespace WagerWatcher
       set { _entrantInResults = value; }
     }
 
-    public virtual RaceBetType RaceBetType { get; set; }
+    public virtual Pool Pool { get; set; }
 
     static partial void CustomizeMappingDocument(System.Xml.Linq.XDocument mappingDocument);
 
@@ -853,24 +736,16 @@ namespace WagerWatcher
       <generator class='guid'>
       </generator>
     </id>
-    <property name='RaceBetTypeId'
-              column='`RaceBetTypeID`'
-              insert='false'
-              update='false'
+    <property name='AmountPaid'
+              column='`AmountPaid`'
               />
-    <bag name='Dividends'
-          inverse='false'
-          >
-      <key column='`ResultId`' />
-      <one-to-many class='Dividend' />
-    </bag>
     <bag name='EntrantInResults'
           inverse='false'
           >
       <key column='`ResultId`' />
       <one-to-many class='EntrantInResult' />
     </bag>
-    <many-to-one name='RaceBetType' class='RaceBetType' column='`RaceBetTypeID`' />
+    <many-to-one name='Pool' class='Pool' column='`PoolId`' />
   </class>
 </hibernate-mapping>");
         CustomizeMappingDocument(mappingDocument);
@@ -880,16 +755,33 @@ namespace WagerWatcher
   }
 
   [System.CodeDom.Compiler.GeneratedCode("NHibernateModelGenerator", "1.0.0.0")]
-  public partial class RaceResult
+  public partial class Pool
   {
-    public virtual int RaceResultID { get; set; }
-    public virtual System.Guid MeetingId { get; set; }
-    public virtual int JetBetCode { get; set; }
-    [NotNull]
-    [Length(Max=50)]
-    public virtual string MDate { get; set; }
-    public virtual System.Guid RaceId { get; set; }
-    public virtual int Racenum { get; set; }
+    public virtual System.Guid PoolId { get; set; }
+    public virtual System.Nullable<System.Guid> BetTypeId { get; set; }
+    public virtual System.Nullable<System.Guid> RaceId { get; set; }
+    [Length(Max=20)]
+    public virtual string Total { get; set; }
+    [Length(Max=20)]
+    public virtual string Gaurantee { get; set; }
+    [Length(Max=20)]
+    public virtual string BroughtForward { get; set; }
+    [Length(Max=5)]
+    public virtual string Commingled { get; set; }
+    [Length(Max=20)]
+    public virtual string CommingledInfo { get; set; }
+
+    private IList<Result> _results = new List<Result>();
+
+    public virtual IList<Result> Results
+    {
+      get { return _results; }
+      set { _results = value; }
+    }
+
+    public virtual BetType BetType { get; set; }
+
+    public virtual Race Race { get; set; }
 
     static partial void CustomizeMappingDocument(System.Xml.Linq.XDocument mappingDocument);
 
@@ -899,34 +791,52 @@ namespace WagerWatcher
       {
         var mappingDocument = System.Xml.Linq.XDocument.Parse(@"<?xml version='1.0' encoding='utf-8' ?>
 <hibernate-mapping xmlns='urn:nhibernate-mapping-2.2'
-                   assembly='" + typeof(RaceResult).Assembly.GetName().Name + @"'
+                   assembly='" + typeof(Pool).Assembly.GetName().Name + @"'
                    namespace='WagerWatcher'
                    default-cascade='save-update'
                    >
-  <class name='RaceResult'
-         table='`RaceResult`'
+  <class name='Pool'
+         table='`Pool`'
          >
-    <id name='RaceResultID'
-        column='`RaceResultID`'
+    <id name='PoolId'
+        column='`PoolID`'
         >
       <generator class='guid'>
       </generator>
     </id>
-    <property name='MeetingId'
-              column='`MeetingID`'
-              />
-    <property name='JetBetCode'
-              column='`JetBetCode`'
-              />
-    <property name='MDate'
-              column='`MDate`'
+    <property name='BetTypeId'
+              column='`BetTypeID`'
+              insert='false'
+              update='false'
               />
     <property name='RaceId'
               column='`RaceID`'
+              insert='false'
+              update='false'
               />
-    <property name='Racenum'
-              column='`racenum`'
+    <property name='Total'
+              column='`Total`'
               />
+    <property name='Gaurantee'
+              column='`Gaurantee`'
+              />
+    <property name='BroughtForward'
+              column='`BroughtForward`'
+              />
+    <property name='Commingled'
+              column='`Commingled`'
+              />
+    <property name='CommingledInfo'
+              column='`CommingledInfo`'
+              />
+    <bag name='Results'
+          inverse='false'
+          >
+      <key column='`PoolId`' />
+      <one-to-many class='Result' />
+    </bag>
+    <many-to-one name='BetType' class='BetType' column='`BetTypeID`' />
+    <many-to-one name='Race' class='Race' column='`RaceID`' />
   </class>
 </hibernate-mapping>");
         CustomizeMappingDocument(mappingDocument);
@@ -968,11 +878,9 @@ namespace WagerWatcher
       configuration.AddXml(HorseInRace.MappingXml.ToString());
       configuration.AddXml(Meeting.MappingXml.ToString());
       configuration.AddXml(Race.MappingXml.ToString());
-      configuration.AddXml(Dividend.MappingXml.ToString());
       configuration.AddXml(EntrantInResult.MappingXml.ToString());
-      configuration.AddXml(RaceBetType.MappingXml.ToString());
       configuration.AddXml(Result.MappingXml.ToString());
-      configuration.AddXml(RaceResult.MappingXml.ToString());
+      configuration.AddXml(Pool.MappingXml.ToString());
       configuration.AddAssembly(typeof(ConfigurationHelper).Assembly);
     }
 

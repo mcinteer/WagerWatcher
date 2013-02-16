@@ -9,16 +9,16 @@ namespace WagerWatcher.Model.Results
     [Serializable, XmlRoot("pool")]
     public class XMLPoolFromResults
     {
-        [XmlElement("type")]
+        [XmlAttribute("type")]
         public string Type { get; set; }
 
-        [XmlElement("number")]
+        [XmlAttribute("number")]
         public string Number { get; set; }
 
-        [XmlElement("name")]
+        [XmlAttribute("name")]
         public string Name { get; set; }
 
-        [XmlElement("amount")]
+        [XmlAttribute("amount")]
         public string Dividend { get; set; }
     }
 }

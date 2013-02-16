@@ -43,7 +43,7 @@ namespace WagerWatcher.Repositories
             }
         }
 
-        public static Meeting GetMeetingByDateAndJetBetCode(string date, string jetBetCode)
+        public static Meeting GetMeetingByDateAndJetBetCode(string date, int jetBetCode)
         {
             Meeting meeting;
             using (var session = NHibernateHelper.OpenSession())
@@ -56,5 +56,7 @@ namespace WagerWatcher.Repositories
             }
             return meeting;
         }
+
+        
     }
 }

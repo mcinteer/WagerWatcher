@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate.Criterion;
 
 namespace WagerWatcher.Repositories
 {
@@ -44,5 +45,19 @@ namespace WagerWatcher.Repositories
                 return session.Get<BetType>(id);
             }
         }
+
+        public static BetType GetBetTypeByXMLDesc(string desc)
+        {
+            BetType betType;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                betType = session
+                    .CreateCriteria(typeof (BetType))
+                    .Add(Restrictions.Eq("XmlDesc", desc))
+                    .UniqueResult<BetType>();
+            }
+            return betType;
+        }
+
     }
 }
