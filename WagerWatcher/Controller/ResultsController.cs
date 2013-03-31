@@ -10,7 +10,7 @@ namespace WagerWatcher.Controller
 {
     public class ResultsController
     {
-        public static Result BuildResultForDB(XMLPoolFromResults xmlPool, Pool pool, Dictionary<string,string> placings)
+        public static Result BuildResultForDB(XMLPoolFromResults xmlPool, Pool pool, Dictionary<string, string> placings, List<FinishingPosition> alsoRan)
         {
             var finishingPositions = GetFinishingPositions(xmlPool,placings);
             IList<EntrantInResult> entrantsInResults = new List<EntrantInResult>();
@@ -23,6 +23,13 @@ namespace WagerWatcher.Controller
                  select
                      EntrantInResultController
                      .BuildEntrantInResultForDB(horse, finishingPosition.Value.Position)).ToList();
+
+                foreach (var runner in alsoRan)
+                {
+                    var horse = HorseRepository.GetByName(runner.HorseName);
+                    var position = runner.Position;
+                    entrantsInResults.Add(EntrantInResultController.BuildEntrantInResultForDB(horse,position));
+                }
             }
             catch (Exception ex)
             {
@@ -102,12 +109,5 @@ namespace WagerWatcher.Controller
             }
             return finishingPositions;
         }
-    }
-
-    public class FinishingPosition
-    {
-        public string HorseNumber { get; set; }
-        public string HorseName { get; set; }
-        public int? Position { get; set; }
     }
 }

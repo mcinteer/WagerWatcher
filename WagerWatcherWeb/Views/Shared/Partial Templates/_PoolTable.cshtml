@@ -1,0 +1,43 @@
+﻿@using WagerWatcher
+@model IList<WagerWatcher.Pool>
+
+<table>
+    <tr>
+        <th>
+            Total
+        </th>
+        <th>
+            Gaurantee
+        </th>
+        <th>
+            BroughtForward
+        </th>
+        <th>
+            Commingled
+        </th>
+        <th>
+            CommingledInfo
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gaurantee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BroughtForward)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Commingled)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CommingledInfo)
+        </td>
+    </tr>
+}
+
+</table>

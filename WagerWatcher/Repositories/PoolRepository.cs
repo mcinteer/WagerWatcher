@@ -46,7 +46,17 @@ namespace WagerWatcher.Repositories
                 return session.Get<Pool>(id);
             }
         }
-
+        public static IList<Pool> GetPoolsByRace(Race race)
+        {
+            IList<Pool> pools;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                pools = session.CreateCriteria(typeof (Pool))
+                               .Add(Restrictions.Eq("RaceId", race.RaceId))
+                               .List<Pool>();
+            }
+            return pools;
+        }
         public static Pool GetByBetTypeAndRace(Guid betTypeID, Guid raceID)
         {
             // make sure when its populating the DB, that one isnt already there

@@ -1,0 +1,34 @@
+﻿@model WagerWatcher.Race
+
+<tr>
+    <td>
+        @Html.ActionLink(Model.RaceName, "HorsesInRace", "ChooseMeeting",new {raceID = Model.RaceId},null)        
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.RaceNum)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.Distance)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.Stake)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.TrackCondition)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.Weather)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.NormTime)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.OverseasNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.RaceStatus)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.Venue)
+    </td>
+</tr>

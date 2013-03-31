@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using NHibernate.Criterion;
 using WagerWatcher.Controller;
 using WagerWatcher.Model;
@@ -70,6 +71,19 @@ namespace WagerWatcher.Repositories
                     .UniqueResult<Horse>();
             }
             return horse;
+        }
+
+        public static IList<HorseInRace> GetHorsesInRace(Race race)
+        {
+            IList<HorseInRace> horses;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                horses = session
+                    .CreateCriteria(typeof(HorseInRace))
+                    .Add(Restrictions.Eq("RaceId", race.RaceId))
+                    .List<HorseInRace>();
+            }
+            return horses;
         }
     }
 }

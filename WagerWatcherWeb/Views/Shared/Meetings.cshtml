@@ -1,0 +1,75 @@
+﻿@model WagerWatcher.Meeting
+
+@{
+    ViewBag.Title = "Meetings";
+}
+
+<h2>Meetings</h2>
+
+<fieldset>
+    <legend>Meeting</legend>
+
+    <div class="display-label">MDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MDate)
+    </div>
+
+    <div class="display-label">JetBetCode</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.JetBetCode)
+    </div>
+
+    <div class="display-label">CourseId</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CourseId)
+    </div>
+
+    <div class="display-label">TrackDirection</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TrackDirection)
+    </div>
+
+    <div class="display-label">BetSlipType</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BetSlipType)
+    </div>
+
+    <div class="display-label">Code</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Code)
+    </div>
+
+    <div class="display-label">Country</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Country)
+    </div>
+
+    <div class="display-label">Name</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">Penetrometer</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Penetrometer)
+    </div>
+
+    <div class="display-label">MeetingStatus</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MeetingStatus)
+    </div>
+
+    <div class="display-label">RaceType</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RaceType)
+    </div>
+
+    <div class="display-label">Venue</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Venue)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", "ChooseMeeting") |
+    @Html.ActionLink("Back to List", "Index", "ChooseMeeting")
+</p>

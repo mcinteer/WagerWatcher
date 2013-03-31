@@ -1,0 +1,38 @@
+﻿@model WagerWatcher.Meeting
+       
+<tr>
+    <td>
+        @Html.ActionLink(Model.Name, "ListRaces", "ChooseMeeting",new {meetingid = Model.MeetingId},null)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.MDate)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.JetBetCode)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.TrackDirection)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.BetSlipType)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.Code)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.Country)
+    </td>    
+    <td>
+        @Html.DisplayFor(meeting => meeting.Penetrometer)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.MeetingStatus)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.RaceType)
+    </td>
+    <td>
+        @Html.DisplayFor(meeting => meeting.Venue)
+    </td>
+        
+</tr>

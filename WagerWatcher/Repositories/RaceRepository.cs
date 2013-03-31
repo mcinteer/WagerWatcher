@@ -61,5 +61,18 @@ namespace WagerWatcher.Repositories
             }
             return races;
         }
+
+        public static IList<HorseInRace> GetHorsesInRace(Race race)
+        {
+            IList<HorseInRace> horses;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                horses = session
+                    .CreateCriteria(typeof (HorseInRace))
+                    .Add(Restrictions.Eq("RaceId", race.RaceId))
+                    .List<HorseInRace>();
+            }
+            return horses;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using NHibernate.Cfg;
 using NHibernate.Validator.Constraints;
 
@@ -857,10 +858,10 @@ namespace WagerWatcher
     /// <returns>A NHibernate configuration object containing mappings for this model.</returns>
     public static Configuration CreateConfiguration()
     {
-      var configuration = new Configuration();
-      configuration.Configure();
-      ApplyConfiguration(configuration);
-      return configuration;
+        var configuration = new Configuration();
+        configuration.Configure();
+        ApplyConfiguration(configuration);
+        return configuration;
     }
 
     /// <summary>

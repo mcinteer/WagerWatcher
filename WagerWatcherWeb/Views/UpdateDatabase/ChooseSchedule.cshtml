@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "UpdateSchedule";
+}
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+    });
+</script>
+
+<h2>UpdateSchedule</h2>
+@using (Html.BeginForm("UpdateSchedule", "UpdateDatabase"))
+{
+    <text>Date: </text>
+    <input name = "date" type = "text" id = "datepicker" />
+    <input name="period" type="text" id="periodPicker"/>
+    <input type="submit" value="GO"/>
+}

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Objects.DataClasses;
 using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
+using WagerWatcher;
 
 namespace WagerWatcherWeb.Models
 {
@@ -60,8 +62,22 @@ namespace WagerWatcherWeb.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = @"Confirm password")]
         [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class RaceDay
+    {
+        [Required]
+        [Display(Name = @"Meetings")]
+        public IEnumerable<Meeting> Meetings { get; set; } 
+    }
+
+    public class MeetingModel
+    {
+        [Required]
+        [Display(Name = @"Races")]
+        public IEnumerable<Race> Races { get; set; }
     }
 }

@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
+using Mindscape.LightSpeed;
 using NHibernate.Criterion;
 
 namespace WagerWatcher.Repositories
 {
-    class MeetingRepository
+    public class MeetingRepository
     {
         public void Add(Meeting meeting)
         {
@@ -57,6 +59,17 @@ namespace WagerWatcher.Repositories
             return meeting;
         }
 
-        
+        public static IEnumerable<Meeting> GetMeetingsByDate(string date)
+        {
+            IEnumerable<Meeting> meetings;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                meetings = session
+                    .CreateCriteria(typeof (Meeting))
+                    .Add(Restrictions.Eq("MDate", date))
+                    .List<Meeting>();
+            }
+            return meetings;
+        }
     }
 }

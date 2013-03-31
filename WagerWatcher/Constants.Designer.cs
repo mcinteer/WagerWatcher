@@ -106,6 +106,15 @@ namespace WagerWatcher {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Completed import for .
+        /// </summary>
+        internal static string Program_Main_Completed_import_for_ {
+            get {
+                return ResourceManager.GetString("Program_Main_Completed_import_for_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to http://xml.tab.co.nz/qla/.
         /// </summary>
         internal static string quenellaDownload {

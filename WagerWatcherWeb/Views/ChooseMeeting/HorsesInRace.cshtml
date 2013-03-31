@@ -1,0 +1,58 @@
+﻿@using WagerWatcher
+@using WagerWatcher.Services
+@model System.Collections.Generic.IList<WagerWatcher.HorseInRace>
+
+@functions {protected Race Race
+            {get; set; }
+    }
+
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Horses</h2>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Number
+        </th>
+        <th>
+            Scratched
+        </th>
+        <th>
+            Barrier
+        </th>
+        <th>
+            JockeyWeight
+        </th>
+        <th>
+            JockeyAllowance
+        </th>
+        <th>
+            JockeyName
+        </th>        
+        <th>
+            Win Dividend
+        </th>
+        <th>
+            Place Dividend
+        </th>
+        <th>
+            Position
+        </th>
+    </tr>
+    @foreach (var horse in Model)
+    {
+        @Html.Partial("Partial Templates/_HorseInRaceTable", horse)
+        if (Race == null)
+        {
+            Race = horse.Race;
+        }
+    }   
+</table>
+<br/>
+@Html.Partial("Partial Templates/_PoolTable", PoolService.GetPoolByRace(Race))

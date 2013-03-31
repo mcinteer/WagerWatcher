@@ -1,0 +1,14 @@
+﻿@model WagerWatcherWeb.Models.MeetingModel
+
+@{
+    ViewBag.Title = "Choose a Meeting";
+}
+
+<h2>Meetings</h2>
+
+@using (Html.BeginForm("ListMeetings", "ChooseMeeting"))
+{
+    <text>Date: </text>
+    <input name = "date" type = "text" id = "datepicker" />
+    <input type="submit" value="GO"/>
+}

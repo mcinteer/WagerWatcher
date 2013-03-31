@@ -1,0 +1,46 @@
+﻿@model System.Collections.Generic.IList<WagerWatcher.Race>
+
+@{
+    ViewBag.Title = "Races";
+}
+
+<h2>Races</h2>
+<table>
+    <tr>
+        <th>
+            RaceName
+        </th>
+        <th>
+            RaceNum
+        </th>
+        <th>
+            Distance
+        </th>
+        <th>
+            Stake
+        </th>
+        <th>
+            TrackCondition
+        </th>
+        <th>
+            Weather
+        </th>
+        <th>
+            NormTime
+        </th>
+        <th>
+            OverseasNumber
+        </th>
+        <th>
+            RaceStatus
+        </th>
+        <th>
+            Venue
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var race in Model)
+    {
+        @Html.Partial("Partial Templates/_RaceTable", race)
+    }
+</table>

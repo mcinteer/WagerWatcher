@@ -1,0 +1,63 @@
+﻿@model IEnumerable<WagerWatcher.Meeting>
+
+@{
+    ViewBag.Title = "ListMeetings";
+}
+
+<h2>Meetings</h2>
+
+
+<table>
+    <tr>
+        <th>
+            MDate
+        </th>
+        <th>
+            JetBetCode
+        </th>
+        <th>
+            CourseId
+        </th>
+        <th>
+            TrackDirection
+        </th>
+        <th>
+            BetSlipType
+        </th>
+        <th>
+            Code
+        </th>
+        <th>
+            Country
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Penetrometer
+        </th>
+        <th>
+            MeetingStatus
+        </th>
+        <th>
+            RaceType
+        </th>
+        <th>
+            Venue
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var meeting in Model)
+    {
+        @Html.Partial("Partial Templates/_MeetingsTable", meeting)        
+    }
+</table>
+<ul>
+    
+    @foreach (var meeting in Model)
+    {
+        <li>
+            @Html.Partial("Meetings", meeting)
+        </li>
+    }
+</ul>

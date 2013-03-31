@@ -21,19 +21,25 @@ namespace WagerWatcher
     {
         public static ISession  Session;
 
+        private static PoolRepository _poolRepository;
+        public static PoolRepository PoolRepository
+        {
+            get { return _poolRepository ?? (_poolRepository = new PoolRepository()); }
+        }
+
         static void Main(string[] args)
         {
             var year = 2013;
             var month = 2;
 
-            for (var day = 1; day < 17; day++)
+            for (var day = 1; day < 2; day++)
             {
                 var dt = new DateTime(year, month, day);
                 var date = dt.ToString("yyyy-MM-dd");
 
-                var meetingsFromSchedule = GetXMLMeetingsRootFromSchedule(date);
-                var meetingsFromResults = GetXMLMeetingsRootFromResults(date);
+                var meetingsFromSchedule = GetXMLMeetingsRootFromSchedule(date);                
                 var meetingsFromPool = GetXMLMeetingsRootFromPool(date);
+                var meetingsFromResults = GetXMLMeetingsRootFromResults(date);
 
                 UpdateDataBase(meetingsFromSchedule,
                                 meetingsFromResults,
@@ -44,6 +50,27 @@ namespace WagerWatcher
             
         }
 
+        public void Main(int year, int month, int day, int periodToImport)
+        {
+            var dt = new DateTime(year, month, day);
+
+            for (var x = 0; x < periodToImport; x++)
+            {
+                var date = dt.ToString("yyyy-MM-dd");
+
+                var meetingsFromSchedule = GetXMLMeetingsRootFromSchedule(date);
+                var meetingsFromPool = GetXMLMeetingsRootFromPool(date);
+                var meetingsFromResults = GetXMLMeetingsRootFromResults(date);
+
+                UpdateDataBase(meetingsFromSchedule,
+                                meetingsFromResults,
+                                meetingsFromPool);
+                Console.WriteLine("Completed import for " + date);
+                dt = dt.AddDays(1);
+            }
+
+
+        }
         public static void UpdateDataBase(  XMLMeetingsRootFromSchedule xmlMeetingsFromSchedule, 
                                             XMLMeetingsRootFromResults  xmlMeetingsFromResults, 
                                             XMLMeetingsRootFromPool     xmlMeetingsFromPool)
@@ -67,12 +94,20 @@ namespace WagerWatcher
                     var race1 = xmlRace;
                     var race = races.First(r => r.RaceNum == Int32.Parse(race1.Number));
 
-                    foreach (var xmlPool in xmlRace.PoolsRoot.pools.FindAll(p => p.BetType == "WIN"))
+                    foreach (var xmlPool in xmlRace.PoolsRoot.pools/*.FindAll(p => p.BetType == "WIN")*/)
                     {
                         var betType = BetTypeRepository.GetBetTypeByXMLDesc(xmlPool.BetType);
-                        var pool =
-                         PoolController.GetPoolFromDB(betType.BetTypeId, race.RaceId)
-                         ?? PoolController.BuildPoolForDB(xmlPool, betType, race);
+                        var pool = PoolController.GetPoolFromDB(betType.BetTypeId, race.RaceId);
+                        var newPool =  PoolController.BuildPoolForDB(xmlPool, betType, race);
+                        if (pool == null)
+                        {
+                            PoolRepository.Add(newPool);
+                        }
+                        else if (pool != newPool)
+                        {
+                            newPool.PoolId = pool.PoolId;
+                            PoolRepository.Update(newPool);
+                        }
                     }
                 }
             }
@@ -124,12 +159,16 @@ namespace WagerWatcher
                             placings.Add(nextPosition +"=", horseName);
                         }
                     }
-                        
 
-                    foreach (var xmlRunner in xmlRace.AlsoRanRoot.RunnersRoot.Runners.Where(
-                        xmlRunner => !placings.ContainsKey(xmlRunner.FinishingPosition)))
+                    var alsoRan = new List<FinishingPosition>();
+                    foreach (var xmlRunner in xmlRace.AlsoRanRoot.RunnersRoot.Runners)
                     {
-                        placings.Add(xmlRunner.FinishingPosition, xmlRunner.EntryName);
+                        alsoRan.Add(new FinishingPosition
+                            {
+                                HorseName = xmlRunner.EntryName,
+                                HorseNumber = xmlRunner.EntryNumber,
+                                Position = Int16.Parse(xmlRunner.FinishingPosition)
+                            });
                     }
 
                     foreach (var xmlPool in xmlRace.PoolsRoot.Pools)
@@ -139,7 +178,7 @@ namespace WagerWatcher
                             PoolController.GetPoolFromDB(betType.BetTypeId, race.RaceId)
                             ?? PoolController.BuildPoolForDB(xmlPool, betType, race);
 
-                        var result = ResultsController.BuildResultForDB(xmlPool, pool, placings);                    
+                        var result = ResultsController.BuildResultForDB(xmlPool, pool, placings, alsoRan);                    
 
                         var resultRepo = new ResultRepository();
                         resultRepo.Add(result);
