@@ -10,13 +10,13 @@
 <table>
     <tr>
         <th>
+            Meeting
+        </th>
+        <th>
             MDate
         </th>
         <th>
             JetBetCode
-        </th>
-        <th>
-            CourseId
         </th>
         <th>
             TrackDirection
@@ -29,9 +29,6 @@
         </th>
         <th>
             Country
-        </th>
-        <th>
-            Name
         </th>
         <th>
             Penetrometer
@@ -52,12 +49,3 @@
         @Html.Partial("Partial Templates/_MeetingsTable", meeting)        
     }
 </table>
-<ul>
-    
-    @foreach (var meeting in Model)
-    {
-        <li>
-            @Html.Partial("Meetings", meeting)
-        </li>
-    }
-</ul>
