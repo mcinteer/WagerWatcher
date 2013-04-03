@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Mindscape.LightSpeed;
-using WagerWatcher.Model;
+﻿using WagerWatcher.Model.Pool;
 using WagerWatcher.Model.Schedule;
+using WagerWatcher.Repositories;
 
-namespace WagerWatcher.Controller
+namespace WagerWatcher.Services
 {
-    public class MeetingController
+    public class MeetingService
     {
         public static Meeting GetMeetingFromScheduleForDB(XMLMeetingFromSchedule scheduleXMLMeeting)
         {
@@ -17,7 +13,7 @@ namespace WagerWatcher.Controller
                     BetSlipType = scheduleXMLMeeting.BetslipType,
                     Code = scheduleXMLMeeting.Code,
                     Country = scheduleXMLMeeting.Country,
-                    Course = RaceCourseController.BuildCourse(scheduleXMLMeeting.Venue),
+                    Course = RaceCourseService.BuildCourse(scheduleXMLMeeting.Venue),
                     JetBetCode = int.Parse(scheduleXMLMeeting.Number),
                     MDate = scheduleXMLMeeting.Date,
                     MeetingStatus = scheduleXMLMeeting.Status,
@@ -28,6 +24,21 @@ namespace WagerWatcher.Controller
                     Venue = scheduleXMLMeeting.Venue
                 };
             return meeting;
+        }        
+
+        public static Meeting GetOrBuildMeetingFromSchedule(string date, short jetBetCode, XMLMeetingFromSchedule xmlMeeting)
+        {
+            var meeting = MeetingRepository.GetMeetingByDateAndJetBetCode(date, jetBetCode) ??
+                          GetMeetingFromScheduleForDB(xmlMeeting);
+            return meeting;
         }
+
+        public static Meeting GetMeetingByDateAndJetBetCode(string date, int jetBetCode)
+        {
+            var meeting = MeetingRepository.GetMeetingByDateAndJetBetCode(date, jetBetCode);
+            return meeting;
+        }
+
+        
     }
 }

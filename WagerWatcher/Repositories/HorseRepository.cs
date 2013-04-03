@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using NHibernate.Criterion;
-using WagerWatcher.Controller;
 using WagerWatcher.Model;
 using WagerWatcher.Model.Schedule;
+using WagerWatcher.Services;
 
 
 namespace WagerWatcher.Repositories
@@ -58,7 +58,7 @@ namespace WagerWatcher.Repositories
                     .Add(Restrictions.Eq("HorseName", entry.Name))
                     .UniqueResult<Horse>();                
             }
-            return horse ?? (HorseController.BuildHorseForDB(entry));
+            return horse ?? (HorseService.BuildHorseForDB(entry));
         }
         public static Horse GetByName(string name)
         {

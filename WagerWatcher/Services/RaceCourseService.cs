@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace WagerWatcher.Controller
+﻿namespace WagerWatcher.Services
 {
-    public class RaceCourseController
+    public class RaceCourseService
     {
         public static RaceCourse BuildCourse(string name, string address = "", int? phoneNumber = null)
         {

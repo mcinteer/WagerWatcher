@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace WagerWatcher.Model.Schedule
 {
-    [Serializable,XmlRoot("schedule")]
+    [Serializable, XmlRoot("schedule")]
     public class XMLScheduleFromSchedule
     {
         [XmlElement("meetings")]

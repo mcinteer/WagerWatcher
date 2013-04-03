@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WagerWatcher.Model;
-using WagerWatcher.Model.Schedule;
+﻿using WagerWatcher.Model.Schedule;
 using WagerWatcher.Repositories;
 
-namespace WagerWatcher.Controller
+namespace WagerWatcher.Services
 {
-    public class HorseController
+    public class HorseService
     {
         public static Horse BuildHorseForDB(XMLEntryFromSchedule entry)
         {

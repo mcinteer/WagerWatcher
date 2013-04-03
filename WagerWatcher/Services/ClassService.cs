@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WagerWatcher.Repositories;
+﻿using WagerWatcher.Repositories;
 
-namespace WagerWatcher.Controller
+namespace WagerWatcher.Services
 {
-    public class ClassController
+    public class ClassService
     {
         public static Class BuildClassForDB(string classDesc)
         {

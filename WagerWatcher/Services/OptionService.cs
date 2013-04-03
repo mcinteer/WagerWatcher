@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WagerWatcher.Model;
-using WagerWatcher.Model.Schedule;
+﻿using WagerWatcher.Model.Schedule;
 
-namespace WagerWatcher.Controller
+namespace WagerWatcher.Services
 {
-    public class OptionController
+    public class OptionService
     {
         public static FixedOption BuildOptionForDB(XMLOptionFromSchedule scheduleXMLOption)
         {

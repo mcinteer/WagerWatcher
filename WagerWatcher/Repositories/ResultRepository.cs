@@ -7,7 +7,7 @@ namespace WagerWatcher.Repositories
 {
     public class ResultRepository
     {
-        public void Add(Result result)
+        public static void Add(Result result)
         {
             using (var session = NHibernateHelper.OpenSession())
             using (var transaction = session.BeginTransaction())
