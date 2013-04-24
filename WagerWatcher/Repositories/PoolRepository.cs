@@ -70,7 +70,5 @@ namespace WagerWatcher.Repositories
             }
             return pool;
         }
-
-     
     }
 }

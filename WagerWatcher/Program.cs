@@ -43,7 +43,7 @@ namespace WagerWatcher
                 var meetingsFromSchedule = GetXMLMeetingsRootFromSchedule(date);                
                 var meetingsFromPool = GetXMLMeetingsRootFromPool(date);
                 var meetingsFromResults = GetXMLMeetingsRootFromResults(date);
-                XMLMeetingsRootFromOdds meetingsFromOdds = GetXMLMeetingsRootFromOdds(date);
+                var meetingsFromOdds = GetXMLMeetingsRootFromOdds(date);
 
                 UpdateDataBase(meetingsFromSchedule,
                                 meetingsFromResults,
