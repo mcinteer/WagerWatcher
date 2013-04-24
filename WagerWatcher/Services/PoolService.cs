@@ -61,7 +61,7 @@ namespace WagerWatcher.Services
 
         public static Pool GetPoolFromDB(Guid betTypeID, Guid raceID)
         {
-            return PoolRepository.GetByBetTypeIDAndRace(betTypeID, raceID);
+            return PoolRepository.GetByBetTypeAndRace(betTypeID, raceID);
         }
 
         public static IList<Pool> GetPoolByRace(Race race)
@@ -73,15 +73,15 @@ namespace WagerWatcher.Services
         {
             try
             {
-                var persistedPool = PoolRepository.GetByBetTypeIDAndRace((Guid)newPool.BetTypeId, (Guid)newPool.RaceId);
+                var persistedPool = PoolRepository.GetByBetTypeAndRace((Guid)newPool.BetTypeId, (Guid)newPool.RaceId);
                 if (persistedPool != null)
                 {
                     newPool.PoolId = persistedPool.PoolId;
-                    PoolRepository.Update(newPool);
+                    PoolRepository.Add(newPool);
                 }
                 else
                 {
-                    PoolRepository.Add(newPool);
+                    PoolRepository.Update(newPool);
                 }
             }
             catch (InvalidOperationException ex)

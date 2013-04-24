@@ -10,6 +10,7 @@ namespace WagerWatcher.Model
     [Serializable, XmlRoot("races")]
     public class XMLRacesRootFromSchedule
     {
+       
         [XmlElement("race")]
         public List<XMLRaceFromSchedule> Races { get; set; } 
     }
