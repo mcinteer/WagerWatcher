@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using NHibernate.Cfg;
 using NHibernate.Validator.Constraints;
 
@@ -705,6 +704,13 @@ namespace WagerWatcher
     public virtual System.Guid ResultId { get; set; }
     [Length(Max=30)]
     public virtual string AmountPaid { get; set; }
+    [Length(Max=20)]
+    public virtual string RaceDate { get; set; }
+    public virtual System.Nullable<int> MeetingNum { get; set; }
+    public virtual System.Nullable<int> RaceNum { get; set; }
+    public virtual System.Nullable<int> HorseNum { get; set; }
+    [Length(Max=10)]
+    public virtual string BetTypeDesc { get; set; }
 
     private IList<EntrantInResult> _entrantInResults = new List<EntrantInResult>();
 
@@ -739,6 +745,21 @@ namespace WagerWatcher
     </id>
     <property name='AmountPaid'
               column='`AmountPaid`'
+              />
+    <property name='RaceDate'
+              column='`RaceDate`'
+              />
+    <property name='MeetingNum'
+              column='`MeetingNum`'
+              />
+    <property name='RaceNum'
+              column='`RaceNum`'
+              />
+    <property name='HorseNum'
+              column='`HorseNum`'
+              />
+    <property name='BetTypeDesc'
+              column='`BetTypeDesc`'
               />
     <bag name='EntrantInResults'
           inverse='false'
@@ -858,10 +879,10 @@ namespace WagerWatcher
     /// <returns>A NHibernate configuration object containing mappings for this model.</returns>
     public static Configuration CreateConfiguration()
     {
-        var configuration = new Configuration();
-        configuration.Configure();
-        ApplyConfiguration(configuration);
-        return configuration;
+      var configuration = new Configuration();
+      configuration.Configure();
+      ApplyConfiguration(configuration);
+      return configuration;
     }
 
     /// <summary>

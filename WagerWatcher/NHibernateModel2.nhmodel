@@ -276,6 +276,19 @@
             <lengthValidation minimumLength="0" maximumLength="30" />
           </validations>
         </entityProperty>
+        <entityProperty name="RaceDate" size="20" columnName="RaceDate" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="20" />
+          </validations>
+        </entityProperty>
+        <entityProperty name="MeetingNum" columnName="MeetingNum" isNullable="true" dataType="Int32" />
+        <entityProperty name="RaceNum" columnName="RaceNum" isNullable="true" dataType="Int32" />
+        <entityProperty name="HorseNum" columnName="HorseNum" isNullable="true" dataType="Int32" />
+        <entityProperty name="BetTypeDesc" size="10" columnName="BetTypeDesc" isNullable="true">
+          <validations>
+            <lengthValidation minimumLength="0" maximumLength="10" />
+          </validations>
+        </entityProperty>
       </entityProperties>
       <identityProperties>
         <identityProperty name="ResultId" columnName="ResultID" dataType="Guid" />

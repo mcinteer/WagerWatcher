@@ -13,6 +13,6 @@ namespace WagerWatcher.Model.Pool
         public string Date { get; set; }
 
         [XmlElement("meeting")]
-        public List<XMLMeetingFromPool> meetings { get; set; }
+        public List<XMLMeetingFromPool> Meetings { get; set; }
     }
 }

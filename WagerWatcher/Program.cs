@@ -10,10 +10,12 @@ using System.Xml;
 using System.Xml.XPath;
 using NHibernate;
 using WagerWatcher.Model;
+using WagerWatcher.Model.Odds;
 using WagerWatcher.Model.Pool;
 using WagerWatcher.Model.Results;
 using WagerWatcher.Repositories;
 using WagerWatcher.Services;
+
 
 namespace WagerWatcher
 {
@@ -41,15 +43,15 @@ namespace WagerWatcher
                 var meetingsFromSchedule = GetXMLMeetingsRootFromSchedule(date);                
                 var meetingsFromPool = GetXMLMeetingsRootFromPool(date);
                 var meetingsFromResults = GetXMLMeetingsRootFromResults(date);
+                XMLMeetingsRootFromOdds meetingsFromOdds = GetXMLMeetingsRootFromOdds(date);
 
                 UpdateDataBase(meetingsFromSchedule,
                                 meetingsFromResults,
-                                meetingsFromPool);
+                                meetingsFromPool,
+                                meetingsFromOdds);
                 Console.WriteLine(Constants.Program_Main_Completed_import_for_ + date);
                 dt = dt.AddDays(7);
             }
-
-            
         }
 
         public void Main(int year, int month, int day, int periodToImport)
@@ -63,32 +65,104 @@ namespace WagerWatcher
                 var meetingsFromSchedule = GetXMLMeetingsRootFromSchedule(date);
                 var meetingsFromPool = GetXMLMeetingsRootFromPool(date);
                 var meetingsFromResults = GetXMLMeetingsRootFromResults(date);
+                var meetingsFromOdds = GetXMLMeetingsRootFromOdds(date);
 
                 UpdateDataBase(meetingsFromSchedule,
                                 meetingsFromResults,
-                                meetingsFromPool);
+                                meetingsFromPool, 
+                                meetingsFromOdds);
                 Console.WriteLine(Constants.Program_Main_Completed_import_for_ + date);
                 dt = dt.AddDays(1);
             }
-
-
         }
-        public static void UpdateDataBase(  XMLMeetingsRootFromSchedule xmlMeetingsFromSchedule, 
-                                            XMLMeetingsRootFromResults  xmlMeetingsFromResults, 
-                                            XMLMeetingsRootFromPool     xmlMeetingsFromPool)
+
+        
+
+        public static void UpdateDataBase(XMLMeetingsRootFromSchedule xmlMeetingsFromSchedule, XMLMeetingsRootFromResults xmlMeetingsFromResults, XMLMeetingsRootFromPool xmlMeetingsFromPool, XMLMeetingsRootFromOdds xmlMeetingsFromOdds)
         {
             UpdateSchedule  (xmlMeetingsFromSchedule);
             UpdatePools     (xmlMeetingsFromPool);
+            UpdateOdds      (xmlMeetingsFromOdds);
             UpdateResults   (xmlMeetingsFromResults);
+            
+        }
+
+        private static void UpdateOdds(XMLMeetingsRootFromOdds oddsXMLMeetings)
+        {
+            foreach (var xmlMeeting in oddsXMLMeetings.Meetings)
+            {
+                var meeting = MeetingService.GetMeetingByDateAndJetBetCode(oddsXMLMeetings.Date,
+                                                                              Int16.Parse(xmlMeeting.JetBetCode));
+                var races = RaceService.GetRacesInMeeting(meeting);
+
+                foreach (var xmlRace in xmlMeeting.RacesRoot.Races)
+                {
+                    var race = races.First(r => r.RaceNum == Int32.Parse(xmlRace.Number));
+
+                    var entries = HorseInRaceService.GetEntrantsFormDBByRace(race);
+                    var pools = PoolService.GetPoolByRace(race).Where(p => p.BetType.BetTypeDesc == "WIN" || p.BetType.BetTypeDesc == "PLC");
+
+                    IList<Result> winResults = new List<Result>();
+                    IList<Result> placeResults = new List<Result>();
+                    foreach (var pool in pools)
+                    {
+                        switch (pool.BetType.BetTypeDesc)
+                        {
+                            case "WIN":
+                                winResults = pool.Results;
+                                
+                                break;
+                            case "PLC":
+                                placeResults = pool.Results;
+                                break;
+                        }                        
+                    }
+                    foreach (var winResult in winResults)
+                    {
+                        var horseInResult = EntrantInResultService.GetByResult(winResult);
+                        HorseInRace horseInRace = entries.Single(hir => hir.HorseId == horseInResult.HorseId);
+
+                        var xmlHorseInRace =
+                            xmlRace.EntriesRoot.Entries.Single(hir => hir.Number == horseInRace.Number.ToString());
+
+                        winResult.AmountPaid = xmlHorseInRace.Win;
+                        winResult.MeetingNum = Int16.Parse(xmlMeeting.JetBetCode);
+                        winResult.HorseNum = Int16.Parse(xmlHorseInRace.Number);
+                        winResult.RaceNum = Int16.Parse(xmlRace.Number);
+                        winResult.RaceDate = oddsXMLMeetings.Date;
+                        winResult.BetTypeDesc = "WIN";
+
+                        ResultsService.AddOrUpdate(winResult);
+                    }
+
+                    foreach (var placeResult in placeResults)
+                    {
+                        var horseInResult = EntrantInResultService.GetByResult(placeResult);
+                        HorseInRace horseInRace = entries.Single(hir => hir.HorseId == horseInResult.HorseId);
+
+                        var xmlHorseInRace =
+                            xmlRace.EntriesRoot.Entries.Single(hir => hir.Number == horseInRace.Number.ToString());
+                        placeResult.AmountPaid = xmlHorseInRace.Place;
+                        placeResult.MeetingNum = Int16.Parse(xmlMeeting.JetBetCode);
+                        placeResult.HorseNum = Int16.Parse(xmlHorseInRace.Number);
+                        placeResult.RaceNum = Int16.Parse(xmlRace.Number);
+                        placeResult.RaceDate = oddsXMLMeetings.Date;
+                        placeResult.BetTypeDesc = "PLC";
+
+                        ResultsService.AddOrUpdate(placeResult);
+                        
+                    }
+                }
+            }
         }
 
 
         private static void UpdatePools(XMLMeetingsRootFromPool poolsXMLMeetings)
         {
-            foreach (var xmlMeeting in  poolsXMLMeetings.meetings)
+            foreach (var xmlMeeting in  poolsXMLMeetings.Meetings)
             {
                 var meeting = MeetingService.GetMeetingByDateAndJetBetCode(poolsXMLMeetings.Date,
-                                                                              Int32.Parse(xmlMeeting.JetBetCode));
+                                                                              Int16.Parse(xmlMeeting.JetBetCode));
                 var races = RaceService.GetRacesInMeeting(meeting);
 
                 foreach (var xmlRace in xmlMeeting.RacesRoot.Races)
@@ -215,12 +289,35 @@ namespace WagerWatcher
             var resultsDoc = new XmlDocument();
             resultsDoc.Load(Constants.resultsDownload + date);
             var meetingsRootNode = resultsDoc.SelectSingleNode("//meetings");
-            if (meetingsRootNode == null) return null;
+            if (meetingsRootNode == null)
+            {
+                return null;
+            }
+
             XMLMeetingsRootFromResults xmlMeetings = null;
             using (var reader = new StringReader(meetingsRootNode.OuterXml))
             {
                 var serializer = new XmlSerializer(typeof(XMLMeetingsRootFromResults));
                 xmlMeetings = (XMLMeetingsRootFromResults)serializer.Deserialize(reader);
+            }
+            return xmlMeetings;
+        }
+
+        private static XMLMeetingsRootFromOdds GetXMLMeetingsRootFromOdds(string date)
+        {
+            var resultsDoc = new XmlDocument();
+            resultsDoc.Load(Constants.oddsDownload + date);
+            var meetingsRootNode = resultsDoc.SelectSingleNode("//meetings");
+            if (meetingsRootNode == null)
+            {
+                return null;
+            }
+
+            XMLMeetingsRootFromOdds xmlMeetings = null;
+            using (var reader = new StringReader(meetingsRootNode.OuterXml))
+            {
+                var serializer = new XmlSerializer(typeof (XMLMeetingsRootFromOdds));
+                xmlMeetings = (XMLMeetingsRootFromOdds) serializer.Deserialize(reader);
             }
             return xmlMeetings;
         }
@@ -254,10 +351,12 @@ namespace WagerWatcher
                 var meetingsFromSchedule = GetXMLMeetingsRootFromSchedule(date);
                 var meetingsFromPool = GetXMLMeetingsRootFromPool(date);
                 var meetingsFromResults = GetXMLMeetingsRootFromResults(date);
+                var meetingsFromOdds = GetXMLMeetingsRootFromOdds(date);
 
                 UpdateDataBase(meetingsFromSchedule,
                                 meetingsFromResults,
-                                meetingsFromPool);
+                                meetingsFromPool, 
+                                meetingsFromOdds);
                 Console.WriteLine(Constants.Program_Main_Completed_import_for_ + date);
                 dt = dt.AddDays(7);
             }

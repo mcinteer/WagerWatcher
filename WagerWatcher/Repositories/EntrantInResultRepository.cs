@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate.Criterion;
 
 namespace WagerWatcher.Repositories
 {
@@ -43,6 +44,19 @@ namespace WagerWatcher.Repositories
             {
                 return session.Get<EntrantInResult>(id);
             }
+        }
+
+        public static EntrantInResult GetByResult(Result result)
+        {
+            EntrantInResult eir;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                eir = session
+                    .CreateCriteria(typeof (EntrantInResult))
+                    .Add(Restrictions.Eq("ResultId", result.ResultId))
+                    .UniqueResult<EntrantInResult>();
+            }
+            return eir;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace WagerWatcher.Services
+﻿using WagerWatcher.Repositories;
+
+namespace WagerWatcher.Services
 {
     public class EntrantInResultService
     {
@@ -11,6 +13,11 @@
                     Position = position
                 };
             return entrantInResult;
+        }
+
+        public static EntrantInResult GetByResult(Result result)
+        {
+            return EntrantInResultRepository.GetByResult(result);
         }
     }
 }

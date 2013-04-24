@@ -13,7 +13,7 @@ namespace WagerWatcher.Services
                 scheduleXMLRace.OptionsRoot.Options.Select(OptionService.BuildOptionForDB).ToList();
 
             IList<HorseInRace> entries = 
-                scheduleXMLRace.Entries.Entries.Select(EntryService.BuildEntryForDB).ToList();
+                scheduleXMLRace.Entries.Entries.Select(HorseInRaceService.BuildEntryForDB).ToList();
 
             var race = new Race()
                 {

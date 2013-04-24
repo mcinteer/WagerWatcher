@@ -112,5 +112,32 @@ namespace WagerWatcher.Services
         {
             ResultRepository.Add(result);
         }
+
+        public static void AddOrUpdate(Result newResult)
+        {
+            try
+            {
+                var persistedResult = ResultRepository.GetByDateAndMeetingAndRaceAndBetType(newResult.RaceDate,
+                                                                                            newResult.MeetingNum,
+                                                                                            newResult.RaceNum,
+                                                                                            newResult.HorseNum,
+                                                                                            newResult.BetTypeDesc);
+                if (persistedResult != null)
+                {
+                    newResult.ResultId = persistedResult.ResultId;
+                    ResultRepository.Update(newResult);
+                }
+                else
+                {
+                    ResultRepository.Add(newResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Console.WriteLine("ERR:111");
+            }
+        }
+
     }
 }

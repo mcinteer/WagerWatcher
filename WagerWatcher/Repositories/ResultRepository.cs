@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate.Criterion;
 
 namespace WagerWatcher.Repositories
 {
@@ -17,7 +18,7 @@ namespace WagerWatcher.Repositories
             }
         }
 
-        public void Update(Result result)
+        public static void Update(Result result)
         {
             using (var session = NHibernateHelper.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -43,6 +44,23 @@ namespace WagerWatcher.Repositories
             {
                 return session.Get<Result>(id);
             }
+        }
+
+        public static Result GetByDateAndMeetingAndRaceAndBetType(string raceDate, int? meetingNum, int? raceNum, int? horseNum, string betTypeDesc)
+        {
+            Result result;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                result = session
+                    .CreateCriteria(typeof (Result))
+                    .Add(Restrictions.Eq("RaceDate", raceDate))
+                    .Add(Restrictions.Eq("MeetingNum", meetingNum))
+                    .Add(Restrictions.Eq("RaceNum", raceNum))
+                    .Add(Restrictions.Eq("HorseNum", horseNum))
+                    .Add(Restrictions.Eq("BetTypeDesc", betTypeDesc))
+                    .UniqueResult<Result>();
+            }
+            return result;
         }
     }
 }

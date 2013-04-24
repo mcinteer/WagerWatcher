@@ -56,7 +56,7 @@ namespace WagerWatcher.Repositories
             }
             return pools;
         }
-        public static Pool GetByBetTypeAndRace(Guid betTypeID, Guid raceID)
+        public static Pool GetByBetTypeIDAndRace(Guid betTypeID, Guid raceID)
         {
             // make sure when its populating the DB, that one isnt already there
             Pool pool;
@@ -70,5 +70,7 @@ namespace WagerWatcher.Repositories
             }
             return pool;
         }
+
+     
     }
 }

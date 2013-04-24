@@ -103,10 +103,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Constants.resx</DependentUpon>
     </Compile>
+    <Compile Include="Model\Odds\XMLBetTypeFromOdds.cs" />
+    <Compile Include="Model\Odds\XMLEntriesRootFromOdds.cs" />
+    <Compile Include="Model\Odds\XMLEntryFromOdds.cs" />
+    <Compile Include="Model\Odds\XMLMeetingFromOdds.cs" />
+    <Compile Include="Model\Odds\XMLMeetingsRootFromOdds.cs" />
+    <Compile Include="Model\Odds\XMLPoolOddsFromOdds.cs" />
+    <Compile Include="Model\Odds\XMLPoolsRootFromOdds.cs" />
+    <Compile Include="Model\Odds\XMLRaceFromOdds.cs" />
+    <Compile Include="Model\Odds\XMLRacesRootFromOdds.cs" />
+    <Compile Include="Repositories\HorseInRaceRepository.cs" />
     <Compile Include="Services\BetTypeService.cs" />
     <Compile Include="Services\ClassService.cs" />
     <Compile Include="Services\EntrantInResultService.cs" />
-    <Compile Include="Services\EntryService.cs" />
+    <Compile Include="Services\HorseInRaceService.cs" />
     <Compile Include="Services\HorseService.cs" />
     <Compile Include="Services\MeetingService.cs" />
     <Compile Include="Services\MeetingsRootService.cs" />
@@ -197,6 +207,12 @@
     <Content Include="x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WagerWatcher.Common\WagerWatcher.Common.csproj">
+      <Project>{e048a384-3a0c-4d29-92a6-da49b3ebb27a}</Project>
+      <Name>WagerWatcher.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
