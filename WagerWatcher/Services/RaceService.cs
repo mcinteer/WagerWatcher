@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using WagerWatcher.Model;
 using WagerWatcher.Model.Schedule;
+using WagerWatcher.Repositories;
 
-namespace WagerWatcher.Controller
+namespace WagerWatcher.Services
 {
-    public class RaceController
+    public class RaceService
     {
         public static Race BuildRaceForDB(XMLRaceFromSchedule scheduleXMLRace, Meeting meeting = null)
         {
             IList<FixedOption> options = 
-                scheduleXMLRace.OptionsRoot.Options.Select(OptionController.BuildOptionForDB).ToList();
+                scheduleXMLRace.OptionsRoot.Options.Select(OptionService.BuildOptionForDB).ToList();
+
             IList<HorseInRace> entries = 
-                scheduleXMLRace.Entries.Entries.Select(EntryController.BuildEntryForDB).ToList();
+                scheduleXMLRace.Entries.Entries.Select(EntryService.BuildEntryForDB).ToList();
+
             var race = new Race()
                 {
-                    Class = ClassController.GetClass(scheduleXMLRace.Class),
+                    Class = ClassService.GetClass(scheduleXMLRace.Class),
                     Distance = int.Parse(scheduleXMLRace.Length),
                     NormTime = scheduleXMLRace.NormalTime,
                     OverseasNumber = scheduleXMLRace.OverseasNumber,
@@ -37,5 +36,23 @@ namespace WagerWatcher.Controller
         }
 
 
+        public static void AddOrUpdate(Race race)
+        {
+            var persistedRace = RaceRepository.GetRaceByDateAndMeetingAndRaceNum(race.NormTime, race.MeetingId, race.RaceNum);
+            if (persistedRace != null)
+            {
+                race.RaceId = persistedRace.RaceId;
+                RaceRepository.Update(race);
+            }
+            else
+            {
+                RaceRepository.Add(race);
+            }
+        }
+
+        public static IList<Race> GetRacesInMeeting(Meeting meeting)
+        {
+            return RaceRepository.GetRacesInMeeting(meeting);
+        }
     }
 }

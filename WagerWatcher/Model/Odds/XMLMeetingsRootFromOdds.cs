@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WagerWatcher.Controller
+namespace WagerWatcher.Model.Odds
 {
-    public class ScheduleController
+    class XMLMeetingsRootFromOdds
     {
-        
     }
 }

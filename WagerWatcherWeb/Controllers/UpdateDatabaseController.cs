@@ -15,7 +15,8 @@ namespace WagerWatcherWeb.Controllers
         {
             var strDate = date.Split('/');
             var prg = new Program();
-            prg.Main(Int32.Parse(strDate[2]), Int32.Parse(strDate[0]), Int32.Parse(strDate[1]), Int32.Parse(period));
+            prg.ImportSaturdays();
+            //prg.Main(Int32.Parse(strDate[2]), Int32.Parse(strDate[0]), Int32.Parse(strDate[1]), Int32.Parse(period));
             return Redirect("~/dashboard");
         }
 

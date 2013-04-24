@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate.Criterion;
-using WagerWatcher.Controller;
 
 namespace WagerWatcher.Repositories
 {
     public class PoolRepository
     {
-        public void Add(Pool raceBetType)
+        public static void Add(Pool raceBetType)
         {
             using (var session = NHibernateHelper.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -19,7 +18,7 @@ namespace WagerWatcher.Repositories
             }
         }
 
-        public void Update(Pool raceBetType)
+        public static void Update(Pool raceBetType)
         {
             using (var session = NHibernateHelper.OpenSession())
             using (var transaction = session.BeginTransaction())

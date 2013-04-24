@@ -9,11 +9,11 @@ using System.Resources;
 using System.Xml;
 using System.Xml.XPath;
 using NHibernate;
-using WagerWatcher.Controller;
 using WagerWatcher.Model;
 using WagerWatcher.Model.Pool;
 using WagerWatcher.Model.Results;
 using WagerWatcher.Repositories;
+using WagerWatcher.Services;
 
 namespace WagerWatcher
 {
@@ -29,12 +29,13 @@ namespace WagerWatcher
 
         static void Main(string[] args)
         {
-            var year = 2013;
-            var month = 2;
-
-            for (var day = 1; day < 2; day++)
+            var year = 2012;
+            var month = 3;
+            var day = 7;
+            var dt = new DateTime(year, month, day);
+            for (var count = 1; count < 52; count++)
             {
-                var dt = new DateTime(year, month, day);
+                
                 var date = dt.ToString("yyyy-MM-dd");
 
                 var meetingsFromSchedule = GetXMLMeetingsRootFromSchedule(date);                
@@ -44,7 +45,8 @@ namespace WagerWatcher
                 UpdateDataBase(meetingsFromSchedule,
                                 meetingsFromResults,
                                 meetingsFromPool);
-                Console.WriteLine("Completed import for " + date);
+                Console.WriteLine(Constants.Program_Main_Completed_import_for_ + date);
+                dt = dt.AddDays(7);
             }
 
             
@@ -65,7 +67,7 @@ namespace WagerWatcher
                 UpdateDataBase(meetingsFromSchedule,
                                 meetingsFromResults,
                                 meetingsFromPool);
-                Console.WriteLine("Completed import for " + date);
+                Console.WriteLine(Constants.Program_Main_Completed_import_for_ + date);
                 dt = dt.AddDays(1);
             }
 
@@ -85,29 +87,21 @@ namespace WagerWatcher
         {
             foreach (var xmlMeeting in  poolsXMLMeetings.meetings)
             {
-                var meeting = MeetingRepository.GetMeetingByDateAndJetBetCode(poolsXMLMeetings.Date,
+                var meeting = MeetingService.GetMeetingByDateAndJetBetCode(poolsXMLMeetings.Date,
                                                                               Int32.Parse(xmlMeeting.JetBetCode));
-                var races = RaceRepository.GetRacesInMeeting(meeting);
+                var races = RaceService.GetRacesInMeeting(meeting);
 
                 foreach (var xmlRace in xmlMeeting.RacesRoot.Races)
                 {
                     var race1 = xmlRace;
                     var race = races.First(r => r.RaceNum == Int32.Parse(race1.Number));
 
-                    foreach (var xmlPool in xmlRace.PoolsRoot.pools/*.FindAll(p => p.BetType == "WIN")*/)
+                    foreach (var xmlPool in xmlRace.PoolsRoot.pools)
                     {
-                        var betType = BetTypeRepository.GetBetTypeByXMLDesc(xmlPool.BetType);
-                        var pool = PoolController.GetPoolFromDB(betType.BetTypeId, race.RaceId);
-                        var newPool =  PoolController.BuildPoolForDB(xmlPool, betType, race);
-                        if (pool == null)
-                        {
-                            PoolRepository.Add(newPool);
-                        }
-                        else if (pool != newPool)
-                        {
-                            newPool.PoolId = pool.PoolId;
-                            PoolRepository.Update(newPool);
-                        }
+                        var betType = BetTypeService.GetBetTypeByXMLDesc(xmlPool.BetType);
+                        var newPool =  PoolService.BuildPoolForDB(xmlPool, betType, race);
+                       
+                        PoolService.AddOrUpdate(newPool);
                     }
                 }
             }
@@ -118,13 +112,16 @@ namespace WagerWatcher
         {
             foreach (var xmlMeeting in scheduleXMLMeetings.Meetings)
             {
-                var meeting = MeetingController.GetMeetingFromScheduleForDB(xmlMeeting);
+                // Check if the meeting is already in the DB and use that one if it is, otherwise things break because we end up adding
+                // Duplicate meetings to the DB. (If the Meeting doesn't exist then create it. 
+                var meeting = MeetingService.GetOrBuildMeetingFromSchedule(xmlMeeting.Date,
+                                                                              Int16.Parse(xmlMeeting.Number), xmlMeeting);
+                    
                 foreach (var xmlRace in xmlMeeting.RacesRoot.Races)
                 {
-                    var race = RaceController.BuildRaceForDB(xmlRace, meeting);
+                    var race = RaceService.BuildRaceForDB(xmlRace, meeting);
 
-                    var raceRepo = new RaceRepository();
-                    raceRepo.Add(race);
+                    RaceService.AddOrUpdate(race);
                 }
             }
         }
@@ -133,9 +130,9 @@ namespace WagerWatcher
         {
             foreach (var xmlMeeting in resultsXMLMeetings.Meetings)
             {
-                var meeting = MeetingRepository.GetMeetingByDateAndJetBetCode(resultsXMLMeetings.Date,
+                var meeting = MeetingService.GetMeetingByDateAndJetBetCode(resultsXMLMeetings.Date,
                                                                               Int32.Parse(xmlMeeting.JetBetCode));
-                var races = RaceRepository.GetRacesInMeeting(meeting);
+                var races = RaceService.GetRacesInMeeting(meeting);
 
                 foreach (var xmlRace in xmlMeeting.RacesRoot.Races)
                 {
@@ -153,10 +150,20 @@ namespace WagerWatcher
                         }
                         else
                         {
-                            var horseName = placings[placing.FinishingPosition];
-                            var nextPosition = Int16.Parse(placing.FinishingPosition) +1;
-                            placings.Add(placing.FinishingPosition +"=", placing.EntryName);
-                            placings.Add(nextPosition +"=", horseName);
+                            try
+                            {
+                                var horseName = placings[placing.FinishingPosition];
+                                var nextPosition = Int16.Parse(placing.FinishingPosition) + 1;
+                                placings.Add(placing.FinishingPosition + "=", placing.EntryName);
+                                placings.Add(nextPosition + "=", horseName);
+                            }
+                            catch (Exception ex)
+                            {
+                                // This will happen when three horses dead heat. will need to find a fix for it
+                                Console.WriteLine(ex);
+                                Console.WriteLine("Three way dead heat.");
+                            }
+                            
                         }
                     }
 
@@ -173,15 +180,14 @@ namespace WagerWatcher
 
                     foreach (var xmlPool in xmlRace.PoolsRoot.Pools)
                     {
-                        var betType = BetTypeRepository.GetBetTypeByXMLDesc(xmlPool.Type);
+                        var betType = BetTypeService.GetBetTypeByXMLDesc(xmlPool.Type);
                         var pool =
-                            PoolController.GetPoolFromDB(betType.BetTypeId, race.RaceId)
-                            ?? PoolController.BuildPoolForDB(xmlPool, betType, race);
+                            PoolService.GetPoolFromDB(betType.BetTypeId, race.RaceId)
+                            ?? PoolService.BuildPoolForDB(xmlPool, betType, race);
 
-                        var result = ResultsController.BuildResultForDB(xmlPool, pool, placings, alsoRan);                    
+                        var result = ResultsService.BuildResultForDB(xmlPool, pool, placings, alsoRan);                    
 
-                        var resultRepo = new ResultRepository();
-                        resultRepo.Add(result);
+                      ResultsService.Add(result);
                     }
                 }
             }
@@ -191,8 +197,10 @@ namespace WagerWatcher
         {
             var scheduleDoc = new XmlDocument();
             scheduleDoc.Load(Constants.scheduleDownload + date);
+            
             var scheduleNode = scheduleDoc.SelectSingleNode("//meetings");
             if (scheduleNode == null) return null;
+
             XMLMeetingsRootFromSchedule xmlMeetings = null;
             using (var reader = new StringReader(scheduleNode.OuterXml))
             {
@@ -232,5 +240,27 @@ namespace WagerWatcher
             return xmlMeetings;
         }
 
+        public void ImportSaturdays()
+        {
+            var year = 2012;
+            var month = 3;
+            var day = 7;
+            var dt = new DateTime(year, month, day);
+            for (var count = 1; count < 52; count++)
+            {
+
+                var date = dt.ToString("yyyy-MM-dd");
+
+                var meetingsFromSchedule = GetXMLMeetingsRootFromSchedule(date);
+                var meetingsFromPool = GetXMLMeetingsRootFromPool(date);
+                var meetingsFromResults = GetXMLMeetingsRootFromResults(date);
+
+                UpdateDataBase(meetingsFromSchedule,
+                                meetingsFromResults,
+                                meetingsFromPool);
+                Console.WriteLine(Constants.Program_Main_Completed_import_for_ + date);
+                dt = dt.AddDays(7);
+            }
+        }
     }
 }

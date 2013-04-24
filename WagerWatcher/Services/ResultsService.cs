@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WagerWatcher.Model.Results;
 using WagerWatcher.Repositories;
 
-namespace WagerWatcher.Controller
+namespace WagerWatcher.Services
 {
-    public class ResultsController
+    public class ResultsService
     {
         public static Result BuildResultForDB(XMLPoolFromResults xmlPool, Pool pool, Dictionary<string, string> placings, List<FinishingPosition> alsoRan)
         {
@@ -21,14 +19,14 @@ namespace WagerWatcher.Controller
                 (from finishingPosition in finishingPositions
                  let horse = HorseRepository.GetByName(finishingPosition.Value.HorseName)
                  select
-                     EntrantInResultController
+                     EntrantInResultService
                      .BuildEntrantInResultForDB(horse, finishingPosition.Value.Position)).ToList();
 
                 foreach (var runner in alsoRan)
                 {
                     var horse = HorseRepository.GetByName(runner.HorseName);
                     var position = runner.Position;
-                    entrantsInResults.Add(EntrantInResultController.BuildEntrantInResultForDB(horse,position));
+                    entrantsInResults.Add(EntrantInResultService.BuildEntrantInResultForDB(horse,position));
                 }
             }
             catch (Exception ex)
@@ -108,6 +106,11 @@ namespace WagerWatcher.Controller
                 
             }
             return finishingPositions;
+        }
+
+        public static void Add(Result result)
+        {
+            ResultRepository.Add(result);
         }
     }
 }

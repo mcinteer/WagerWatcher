@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace WagerWatcher.Controller
+﻿namespace WagerWatcher.Services
 {
-    public class EntrantInResultController
+    public class EntrantInResultService
     {
         public static EntrantInResult BuildEntrantInResultForDB(Horse horse, int? position)
         {

@@ -10,7 +10,7 @@ namespace WagerWatcher.Repositories
     public class RaceRepository
     {
        
-        public void Add(Race race)
+        public static void Add(Race race)
         {
             using (var session = NHibernateHelper.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -21,7 +21,7 @@ namespace WagerWatcher.Repositories
         }
 
 
-        public void Update(Race race)
+        public static void Update(Race race)
         {
             using (var session = NHibernateHelper.OpenSession())
             using (var transaction = session.BeginTransaction())
@@ -73,6 +73,21 @@ namespace WagerWatcher.Repositories
                     .List<HorseInRace>();
             }
             return horses;
+        }
+
+        public static Race GetRaceByDateAndMeetingAndRaceNum(string normTime, Guid? meetingId, int raceNum)
+        {
+            Race race;
+            using (var session = NHibernateHelper.OpenSession())
+            {
+                race = session
+                    .CreateCriteria(typeof (Race))
+                    .Add(Restrictions.Eq("NormTime", normTime))
+                    .Add(Restrictions.Eq("MeetingId", meetingId))
+                    .Add(Restrictions.Eq("RaceNum", raceNum))
+                    .UniqueResult<Race>();
+            }
+            return race;
         }
     }
 }

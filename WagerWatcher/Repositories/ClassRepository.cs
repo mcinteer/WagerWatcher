@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NHibernate.Criterion;
-using WagerWatcher.Controller;
 using WagerWatcher.Model;
+using WagerWatcher.Services;
 
 namespace WagerWatcher.Repositories
 {
@@ -58,7 +58,7 @@ namespace WagerWatcher.Repositories
                     .Add(Restrictions.Eq("ClassDesc", desc))
                     .UniqueResult<Class>();                
             }
-            return cClass ?? (ClassController.BuildClassForDB(desc));
+            return cClass ?? (ClassService.BuildClassForDB(desc));
         }
     }
 }

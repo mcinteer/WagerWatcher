@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using WagerWatcher.Model;
-using WagerWatcher.Model.Schedule;
+﻿using WagerWatcher.Model.Schedule;
 
-namespace WagerWatcher.Controller
+namespace WagerWatcher.Services
 {
-    public class EntryController
+    public class EntryService
     {
         public static HorseInRace BuildEntryForDB(XMLEntryFromSchedule xmlEntry/*, Race race*/)
         {
@@ -17,6 +12,7 @@ namespace WagerWatcher.Controller
             if (xmlEntry.JockeyWeight == null) xmlEntry.JockeyWeight = "0";
             if (xmlEntry.Number == null) xmlEntry.Number = "0";
             if (xmlEntry.Scratched == null) xmlEntry.Scratched = "0";
+
             var horseInRace = new HorseInRace
                 {
                     Barrier = xmlEntry.Barrier,
@@ -27,7 +23,7 @@ namespace WagerWatcher.Controller
                     Number = int.Parse(xmlEntry.Number),
                    /* Race = race,*/
                     Scratched = int.Parse(xmlEntry.Scratched),
-                    Horse = HorseController.GetHorse(xmlEntry)
+                    Horse = HorseService.GetHorse(xmlEntry)
                 };
             return horseInRace;
         }
