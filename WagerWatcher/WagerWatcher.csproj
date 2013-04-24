@@ -103,15 +103,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Constants.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\BetTypeService.cs" />
-    <Compile Include="Services\ClassService.cs" />
-    <Compile Include="Services\EntrantInResultService.cs" />
-    <Compile Include="Services\EntryService.cs" />
-    <Compile Include="Services\HorseService.cs" />
-    <Compile Include="Services\MeetingService.cs" />
-    <Compile Include="Services\MeetingsRootService.cs" />
-    <Compile Include="Services\PoolService.cs" />
-    <Compile Include="Services\ResultsService.cs" />
+    <Compile Include="Controller\ClassController.cs" />
+    <Compile Include="Controller\EntrantInResultController.cs" />
+    <Compile Include="Controller\EntryController.cs" />
+    <Compile Include="Controller\HorseController.cs" />
+    <Compile Include="Controller\MeetingController.cs" />
+    <Compile Include="Controller\MeetingsRootController.cs" />
+    <Compile Include="Controller\PoolController.cs" />
+    <Compile Include="Controller\ResultsController.cs" />
     <Compile Include="Model\Pool\XMLEntriesRootFromPool.cs" />
     <Compile Include="Model\Pool\XMLEntryFromPool.cs" />
     <Compile Include="Model\Pool\XMLMeetingFromPool.cs" />
@@ -119,7 +118,12 @@
     <Compile Include="Model\Pool\XMLPoolFromPool.cs" />
     <Compile Include="Model\Pool\XMLPoolsRootFromPool.cs" />
     <Compile Include="Model\Pool\XMLRaceFromPool.cs" />
+    <Compile Include="Model\Quinella\XMLEntriesRootFromQuinella.cs" />
+    <Compile Include="Model\Quinella\XMLEntryFromQuinella.cs" />
+    <Compile Include="Model\Quinella\XMLMeetingFromQuinella.cs" />
     <Compile Include="Model\Quinella\XMLMeetingsRootFromQuinella.cs" />
+    <Compile Include="Model\Quinella\XMLRaceFromQuinella.cs" />
+    <Compile Include="Model\Quinella\XMLRacesRootFromQuinella.cs" />
     <Compile Include="Model\Results\FinishingPosition.cs" />
     <Compile Include="Model\Results\XMLAlsoRanRootFromResults.cs" />
     <Compile Include="Model\Results\XMLMeetingFromResults.cs" />
@@ -141,11 +145,11 @@
     <Compile Include="Repositories\HorseRepository.cs" />
     <Compile Include="Repositories\MeetingRepository.cs" />
     <Compile Include="Repositories\NHibernateHelper.cs" />
-    <Compile Include="Services\OptionService.cs" />
-    <Compile Include="Services\RaceService.cs" />
-    <Compile Include="Services\RaceCourseService.cs" />
-    <Compile Include="Services\ScheduleService.cs" />
-    <Compile Include="Services\XMLHelper.cs" />
+    <Compile Include="Controller\OptionController.cs" />
+    <Compile Include="Controller\RaceController.cs" />
+    <Compile Include="Controller\RaceCourseController.cs" />
+    <Compile Include="Controller\ScheduleController.cs" />
+    <Compile Include="Controller\XMLHelper.cs" />
     <Compile Include="Model\Schedule\XMLEntriesRootFromSchedule.cs" />
     <Compile Include="Model\Schedule\XMLEntryFromSchedule.cs" />
     <Compile Include="Model\Schedule\XMLMeetingFromSchedule.cs" />
@@ -166,6 +170,7 @@
     <Compile Include="Repositories\PoolRepository.cs" />
     <Compile Include="Repositories\RaceRepository.cs" />
     <Compile Include="Repositories\ResultRepository.cs" />
+    <Compile Include="Services\PoolService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -181,6 +186,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Model\Services\" />
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>

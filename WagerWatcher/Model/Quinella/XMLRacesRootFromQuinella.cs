@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
-using WagerWatcher.Model.Schedule;
 
-namespace WagerWatcher.Model
+namespace WagerWatcher.Model.Quinella
 {
     [Serializable, XmlRoot("races")]
-    public class XMLRacesRootFromSchedule
+    public class XMLRacesRootFromQuinella
     {
-       
         [XmlElement("race")]
-        public List<XMLRaceFromSchedule> Races { get; set; } 
+        public List<XMLRaceFromQuinella> Races { get; set; }
     }
 }
