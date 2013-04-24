@@ -6,10 +6,10 @@ using System.Xml.Serialization;
 
 namespace WagerWatcher.Model.Quinella
 {
-    [XmlRoot("meetings")]
-    public class XMLMeetingsRootFromQuinella
+    [Serializable, XmlRoot("races")]
+    public class XMLRacesRootFromQuinella
     {
-        [XmlElement("meeting")]
-        public List<XMLMeetingFromQuinella> Meetings { get; set; }
+        [XmlElement("race")]
+        public List<XMLRaceFromQuinella> Races { get; set; }
     }
 }
