@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Mindscape.LightSpeed;
 using NHibernate.Criterion;
 
 namespace WagerWatcher.Repositories
