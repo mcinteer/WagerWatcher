@@ -118,6 +118,12 @@
     <Compile Include="Model\Pool\XMLPoolFromPool.cs" />
     <Compile Include="Model\Pool\XMLPoolsRootFromPool.cs" />
     <Compile Include="Model\Pool\XMLRaceFromPool.cs" />
+    <Compile Include="Model\Quinella\XMLEntriesRootFromQuinella.cs" />
+    <Compile Include="Model\Quinella\XMLEntryFromQuinella.cs" />
+    <Compile Include="Model\Quinella\XMLMeetingFromQuinella.cs" />
+    <Compile Include="Model\Quinella\XMLMeetingsRootFromQuinella.cs" />
+    <Compile Include="Model\Quinella\XMLRaceFromQuinella.cs" />
+    <Compile Include="Model\Quinella\XMLRacesRootFromQuinella.cs" />
     <Compile Include="Model\Results\FinishingPosition.cs" />
     <Compile Include="Model\Results\XMLAlsoRanRootFromResults.cs" />
     <Compile Include="Model\Results\XMLMeetingFromResults.cs" />
